@@ -214,10 +214,7 @@
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
   .hero-copy h1{font-size:clamp(2.5rem,4.6vw,3.8rem);margin:18px 0 22px;max-width:560px;}
   .hero-copy .lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--ink-soft);max-width:520px;line-height:1.65;margin-bottom:34px;}
-  .hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:38px;}
-  .hero-stats{display:flex;gap:38px;margin-bottom:30px;flex-wrap:wrap;}
-  .hero-stats div strong{display:block;font-size:1.5rem;font-weight:800;}
-  .hero-stats div span{font-size:.8rem;color:var(--ink-soft);}
+  .hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:34px;}
   .hero-ig-link{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--purple-700);font-size:.95rem;}
   .hero-ig-link svg{width:20px;height:20px;}
 
@@ -239,7 +236,7 @@
     }
     .hero-grid{grid-template-columns:1fr;gap:50px;text-align:center;}
     .hero-copy h1, .hero-copy .lead{margin-left:auto;margin-right:auto;}
-    .hero-actions, .hero-stats{justify-content:center;}
+    .hero-actions{justify-content:center;}
     .hero-photo{aspect-ratio:1/1;max-width:420px;margin:0 auto;}
     .hero-floating-badge{position:static;margin:22px auto 0;}
   }
@@ -278,62 +275,6 @@
     .about-photo img{height:340px;}
   }
 
-  /* ---------- NUESTRO EQUIPO ---------- */
-  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
-  .team-card{
-    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
-    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
-    border-radius:var(--r-lg);overflow:hidden;text-align:center;padding-bottom:24px;
-    box-shadow:0 18px 45px -25px rgba(0,0,0,.18);
-    transition:transform .7s var(--ease-soft), box-shadow .7s var(--ease-soft);
-  }
-  .team-card:hover{transform:translateY(-8px);box-shadow:0 28px 55px -20px var(--accent-border, rgba(0,0,0,.22));}
-  .team-photo{aspect-ratio:1/1;overflow:hidden;border-bottom:4px solid var(--accent, var(--purple-300));}
-  .team-photo img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-soft);}
-  .team-card:hover .team-photo img{transform:scale(1.07);}
-  .team-card h4{margin-top:20px;font-size:1.1rem;font-weight:800;color:var(--accent-dark, var(--ink));}
-  .team-tag{
-    display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;
-    padding:6px 14px;border-radius:var(--r-pill);
-    background:var(--accent-tint,var(--purple-50));color:var(--accent-dark,var(--purple-700));
-  }
-  @media (max-width:980px){.team-grid{grid-template-columns:1fr 1fr;}}
-  @media (max-width:560px){.team-grid{grid-template-columns:1fr;}}
-
-  /* ---------- LO QUE HACEMOS ---------- */
-  .feature-row{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;margin-bottom:90px;}
-  .feature-photo{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-soft);}
-  .feature-photo img{width:100%;height:460px;object-fit:cover;}
-  .benefit-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;}
-  .benefit-list li{
-    display:flex;align-items:center;gap:10px;font-weight:600;font-size:.95rem;
-    background:#fff;border:1px solid rgba(109,40,217,.12);padding:14px 16px;border-radius:var(--r-sm);
-  }
-  @media (max-width:980px){
-    .feature-row{grid-template-columns:1fr;gap:30px;}
-    .feature-photo img{height:300px;}
-    .benefit-list{grid-template-columns:1fr;}
-  }
-
-  .alliances{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-  .alliance-card{
-    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 60%);
-    border-radius:var(--r-md);padding:28px 22px;
-    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
-    box-shadow:0 14px 40px -20px rgba(0,0,0,.12);
-    transition:transform .65s var(--ease-soft), box-shadow .65s var(--ease-soft);
-  }
-  .alliance-card:hover{transform:translateY(-8px);box-shadow:0 26px 50px -18px var(--accent-border, rgba(0,0,0,.18));}
-  .alliance-card .ic{
-    width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
-    background:var(--accent, var(--gradient));font-size:1.4rem;margin-bottom:14px;
-    box-shadow:0 10px 22px -8px var(--accent-border, transparent);
-  }
-  .alliance-card h4{font-size:1rem;font-weight:800;margin-bottom:8px;color:var(--accent-dark, var(--ink));}
-  .alliance-card p{font-size:.85rem;color:var(--ink-soft);line-height:1.5;}
-  @media (max-width:980px){.alliances{grid-template-columns:1fr 1fr;}}
-  @media (max-width:560px){.alliances{grid-template-columns:1fr;}}
-
   /* ---------- SERVICIOS ---------- */
   .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px;}
   .service-card{
@@ -353,49 +294,15 @@
   .service-card p{color:var(--ink-soft);font-size:.92rem;line-height:1.6;}
   @media (max-width:980px){.services-grid{grid-template-columns:1fr;}}
 
-  /* ---------- GALERIA ---------- */
-  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px;}
-  .gallery-item{
-    position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;
-    box-shadow:0 16px 40px -22px rgba(0,0,0,.25);
-  }
-  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-soft);}
-  .gallery-item:hover img{transform:scale(1.08);}
-  .gallery-cap{
-    position:absolute;left:0;right:0;bottom:0;padding:18px 16px;
-    background:linear-gradient(to top, rgba(29,29,31,.85), transparent);
-    color:#fff;font-size:.85rem;font-weight:600;
-    opacity:0;transform:translateY(10px);transition:.6s var(--ease-soft);
-  }
-  .gallery-item:hover .gallery-cap{opacity:1;transform:translateY(0);}
-  @media (max-width:860px){.gallery-grid{grid-template-columns:1fr 1fr;}}
-  @media (max-width:560px){.gallery-grid{grid-template-columns:1fr;}}
-
   /* ---------- CONTACTO ---------- */
-  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:stretch;}
-  .contact-card{padding:48px 44px;}
-  .contact-card h3{font-size:1.5rem;margin-bottom:10px;}
-  .contact-card p{color:var(--ink-soft);margin-bottom:30px;line-height:1.6;}
-  .contact-links{display:flex;flex-direction:column;gap:14px;margin-bottom:10px;}
-  .contact-link{
-    display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r-md);
-    background:#fff;border:1px solid rgba(0,0,0,.06);font-weight:600;
-    transition:transform .6s var(--ease-soft), box-shadow .6s var(--ease-soft);
+  .contact-single{
+    max-width:620px;margin:0 auto;
+    padding:56px 50px;text-align:center;
   }
-  .contact-link:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(109,40,217,.35);}
-  .contact-link .ic-circle{
-    width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    background:var(--gradient);color:#fff;font-size:1.15rem;flex-shrink:0;
-  }
-  form{display:flex;flex-direction:column;gap:14px;}
-  form input, form textarea{
-    width:100%;padding:16px 18px;border-radius:var(--r-sm);border:1px solid rgba(0,0,0,.1);
-    font-family:inherit;font-size:.95rem;background:#fff;resize:vertical;
-    transition:border-color .5s var(--ease-soft), box-shadow .5s var(--ease-soft);
-  }
-  form input:focus, form textarea:focus{outline:none;border-color:var(--purple-400);box-shadow:0 0 0 4px rgba(124,58,237,.12);}
-  form button{margin-top:6px;}
-  @media (max-width:980px){.contact-wrap{grid-template-columns:1fr;}.contact-card{padding:36px 28px;}}
+  .contact-single h3{font-size:1.7rem;margin-bottom:14px;}
+  .contact-single p{color:var(--ink-soft);line-height:1.6;margin-bottom:34px;font-size:1.05rem;}
+  .contact-buttons{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+  @media (max-width:560px){.contact-single{padding:40px 28px;}}
 
   footer{
     padding:54px 0 36px;text-align:center;background:rgba(255,255,255,.55);
@@ -419,10 +326,7 @@
     <a href="#" class="brand"><img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">Inka Trewa</a>
     <div class="nav-links">
       <a href="#sobre-nosotros">Sobre Nosotros</a>
-      <a href="#equipo">Nuestro Equipo</a>
-      <a href="#lo-que-hacemos">Lo que Hacemos</a>
       <a href="#servicios">Servicios</a>
-      <a href="#galeria">Galería</a>
       <a href="#contacto">Contacto</a>
     </div>
     <div class="nav-cta">
@@ -435,10 +339,7 @@
 
 <div class="mobile-menu glass" id="mobileMenu">
   <a href="#sobre-nosotros">Sobre Nosotros</a>
-  <a href="#equipo">Nuestro Equipo</a>
-  <a href="#lo-que-hacemos">Lo que Hacemos</a>
   <a href="#servicios">Servicios</a>
-  <a href="#galeria">Galería</a>
   <a href="#contacto">Contacto</a>
   <a href="https://wa.me/56950102463" target="_blank">WhatsApp</a>
 </div>
@@ -451,15 +352,10 @@
     <div class="hero-copy reveal">
       <span class="eyebrow hero-eyebrow">Inka Trewa · Valdivia, Chile</span>
       <h1>Bienestar, salud y <span class="accent">educación</span> a través del vínculo humano-animal</h1>
-      <p class="lead">Acompañamos procesos terapéuticos, educativos y de salud junto a nuestro equipo de perros de terapia entrenados: Ina, Roma, Joy y Leia.</p>
+      <p class="lead">Acompañamos procesos terapéuticos, educativos y de salud junto a nuestro equipo de perros de terapia entrenados.</p>
       <div class="hero-actions">
         <a href="#contacto" class="btn btn-primary">Contactar</a>
-        <a href="#equipo" class="btn-link">Conoce al equipo <span>→</span></a>
-      </div>
-      <div class="hero-stats">
-        <div><strong>94</strong><span>Publicaciones</span></div>
-        <div><strong>1.478</strong><span>Seguidores</span></div>
-        <div><strong>4</strong><span>Perros de terapia</span></div>
+        <a href="#servicios" class="btn-link">Ver servicios <span>→</span></a>
       </div>
       <a href="https://www.instagram.com/inka_trewa/" target="_blank" class="hero-ig-link">
         <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>
@@ -495,7 +391,7 @@
         <span class="pill">Educadora Canina</span>
         <span class="pill">Intervención Asistida con Animales</span>
       </div>
-      <p class="section-sub">Nuestro equipo peludo está formado por <strong>Ina, Roma, Joy y Leia</strong>, perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
+      <p class="section-sub">Nuestro equipo peludo de perros de terapia, entrenados por Gabriela, está presente en cada sesión, capacitación y visita que realizamos.</p>
       <div class="quote-card">
         “El perro fue mi compañero en una soledad no deseada, eso hizo clic para emprender en lo que hago ahora.”
         <cite>— Gabriela Álvarez, terapeuta ocupacional</cite>
@@ -507,93 +403,8 @@
   </div>
 </section>
 
-<!-- ===== NUESTRO EQUIPO ===== -->
-<section id="equipo">
-  <div class="wrap">
-    <div class="reveal" style="text-align:center;">
-      <span class="eyebrow">Nuestro equipo</span>
-      <h2 class="section-title">El equipo peludo de Inka Trewa</h2>
-      <p class="section-sub" style="margin:0 auto;">Cuatro perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
-    </div>
-    <div class="team-grid stagger">
-      <div class="team-card accent-purple">
-        <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de terapia"></div>
-        <h4>Ina</h4>
-        <span class="team-tag">Perro de terapia</span>
-      </div>
-      <div class="team-card accent-indigo">
-        <div class="team-photo"><img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de terapia"></div>
-        <h4>Roma</h4>
-        <span class="team-tag">Perro de terapia</span>
-      </div>
-      <div class="team-card accent-sky">
-        <div class="team-photo"><img src="assets/inka_trewa/post_06.jpg" alt="Joy, perro de terapia"></div>
-        <h4>Joy</h4>
-        <span class="team-tag">Perro de terapia</span>
-      </div>
-      <div class="team-card accent-teal">
-        <div class="team-photo"><img src="assets/inka_trewa/leia-crop.jpg" alt="Leia, perro de terapia"></div>
-        <h4>Leia</h4>
-        <span class="team-tag">Perro de terapia</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== LO QUE HACEMOS ===== -->
-<section id="lo-que-hacemos" class="bg-purple">
-  <div class="wrap">
-    <div class="feature-row">
-      <div class="feature-photo reveal">
-        <img src="assets/inka_trewa/post_06.jpg" alt="Perro de terapia Inka Trewa">
-      </div>
-      <div class="reveal">
-        <span class="eyebrow">Lo que hacemos</span>
-        <h2 class="section-title">¿Qué hace un perro de terapia en Inka Trewa?</h2>
-        <p class="section-sub">Mucho más de lo que imaginamos. Su presencia no es solo compañía: es un estímulo para que cada niño o niña siga avanzando hacia un nuevo comienzo, apoyando su rehabilitación y entregando bienestar a todos quienes participan de la intervención —como en nuestro trabajo junto a CONIN Valdivia.</p>
-        <p class="section-sub" style="margin-top:14px;">A través del juego, la interacción y el afecto, nuestros perros ayudan a promover:</p>
-        <ul class="benefit-list">
-          <li>🐾 Comunicación</li>
-          <li>🐾 Regulación emocional</li>
-          <li>🐾 Interacción social</li>
-          <li>🐾 Participación ocupacional</li>
-          <li>🐾 Motivación en terapia</li>
-          <li>🐾 Vínculos genuinos</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="reveal" style="text-align:center;margin-bottom:10px;">
-      <span class="eyebrow">Alianzas reales</span>
-      <h3 style="font-size:1.6rem;font-weight:800;letter-spacing:-.02em;">Instituciones con las que trabajamos</h3>
-    </div>
-    <div class="alliances stagger">
-      <div class="alliance-card accent-purple">
-        <span class="ic">🏥</span>
-        <h4>CONIN Valdivia</h4>
-        <p>Intervención asistida con perros en hospitalización pediátrica.</p>
-      </div>
-      <div class="alliance-card accent-indigo">
-        <span class="ic">🎓</span>
-        <h4>Universidad San Sebastián</h4>
-        <p>Capacitaciones y diplomados en intervención asistida con perros.</p>
-      </div>
-      <div class="alliance-card accent-sky">
-        <span class="ic">🦷</span>
-        <h4>Diente de Arcoíris</h4>
-        <p>Acompañamiento terapéutico mensual en “Sábado de Patitas”.</p>
-      </div>
-      <div class="alliance-card accent-teal">
-        <span class="ic">🏨</span>
-        <h4>Hospital de Paillaco</h4>
-        <p>Apoyo en protocolo de reencuentro de niños hospitalizados con sus mascotas.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== SERVICIOS ===== -->
-<section id="servicios">
+<section id="servicios" class="bg-purple">
   <div class="wrap">
     <div class="reveal" style="text-align:center;">
       <span class="eyebrow">Servicios</span>
@@ -623,56 +434,16 @@
   </div>
 </section>
 
-<!-- ===== GALERIA ===== -->
-<section id="galeria" class="bg-green">
-  <div class="wrap">
-    <div class="reveal" style="text-align:center;">
-      <span class="eyebrow">Galería</span>
-      <h2 class="section-title">Nuestro trabajo en imágenes</h2>
-      <p class="section-sub" style="margin:0 auto;">Momentos reales de nuestras intervenciones, capacitaciones y del equipo peludo de Inka Trewa.</p>
-    </div>
-    <div class="gallery-grid stagger">
-      <div class="gallery-item"><img src="assets/inka_trewa/post_02.jpg" alt="Sesión de vínculo terapéutico"><div class="gallery-cap">Sesión de vínculo terapéutico</div></div>
-      <div class="gallery-item"><img src="assets/inka_trewa/post_06.jpg" alt="Acompañamiento en espacio de salud"><div class="gallery-cap">Acompañamiento en espacio de salud</div></div>
-      <div class="gallery-item"><img src="assets/inka_trewa/post_07.jpg" alt="Egreso del diplomado USS"><div class="gallery-cap">Egreso diplomado · Universidad San Sebastián</div></div>
-      <div class="gallery-item"><img src="assets/inka_trewa/post_08.jpg" alt="Capacitación Aula Magna"><div class="gallery-cap">Capacitación en Aula Magna</div></div>
-      <div class="gallery-item"><img src="assets/inka_trewa/post_10.jpg" alt="Equipo peludo Inka Trewa"><div class="gallery-cap">Nuestro equipo peludo</div></div>
-      <div class="gallery-item"><img src="assets/inka_trewa/post_11.jpg" alt="Vínculo humano-animal"><div class="gallery-cap">Vínculo humano-animal</div></div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== CONTACTO ===== -->
 <section id="contacto">
   <div class="wrap">
-    <div class="contact-wrap">
-      <div class="contact-card glass reveal">
-        <span class="eyebrow">Contacto</span>
-        <h3>Hablemos sobre tu institución</h3>
-        <p>Escríbenos por WhatsApp o Instagram y conversemos sobre cómo nuestro equipo de perros de terapia puede acompañar tu colegio, clínica u hospital.</p>
-        <div class="contact-links">
-          <a href="https://wa.me/56950102463" target="_blank" class="contact-link">
-            <span class="ic-circle">💬</span> +56 9 5010 2463 · WhatsApp
-          </a>
-          <a href="https://www.instagram.com/inka_trewa/" target="_blank" class="contact-link">
-            <span class="ic-circle">📷</span> @inka_trewa · Instagram
-          </a>
-          <a href="#" class="contact-link">
-            <span class="ic-circle">📍</span> Valdivia, Región de Los Ríos, Chile
-          </a>
-        </div>
-      </div>
-
-      <div class="contact-card glass reveal">
-        <span class="eyebrow">Escríbenos</span>
-        <h3>Cuéntanos tu idea</h3>
-        <p>Completa el formulario y se abrirá WhatsApp con tu mensaje listo para enviar.</p>
-        <form id="contactForm">
-          <input type="text" id="cf-name" placeholder="Tu nombre" required>
-          <input type="text" id="cf-org" placeholder="Institución (colegio, clínica, hospital...)">
-          <textarea id="cf-msg" rows="4" placeholder="Cuéntanos en qué te gustaría que te acompañemos" required></textarea>
-          <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
-        </form>
+    <div class="contact-single glass reveal">
+      <span class="eyebrow">Contacto</span>
+      <h3>Hablemos sobre tu institución</h3>
+      <p>Escríbenos por WhatsApp o Instagram y conversemos sobre cómo nuestro equipo de perros de terapia puede acompañar tu colegio, clínica u hospital.</p>
+      <div class="contact-buttons">
+        <a href="https://wa.me/56950102463" target="_blank" class="btn btn-primary">💬 +56 9 5010 2463</a>
+        <a href="https://www.instagram.com/inka_trewa/" target="_blank" class="btn btn-glass">📷 @inka_trewa</a>
       </div>
     </div>
   </div>
@@ -716,16 +487,6 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
-
-  // Contact form -> WhatsApp
-  document.getElementById('contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('cf-name').value;
-    const org = document.getElementById('cf-org').value;
-    const msg = document.getElementById('cf-msg').value;
-    const text = encodeURIComponent(`Hola Inka Trewa! Soy ${name}${org ? ' de ' + org : ''}. ${msg}`);
-    window.open(`https://wa.me/56950102463?text=${text}`, '_blank');
-  });
 </script>
 
 </body>
