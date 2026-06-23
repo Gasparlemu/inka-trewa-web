@@ -100,7 +100,7 @@
   }
   .section-sub{color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.15rem);max-width:620px;line-height:1.6;font-weight:400;}
 
-  section{position:relative;padding:120px 0;background:rgba(255,255,255,.74);}
+  section{position:relative;padding:90px 0;background:rgba(255,255,255,.74);}
   .bg-purple{background:rgba(124,58,237,.07);}
   .bg-green{background:rgba(16,185,129,.07);}
 
@@ -272,14 +272,9 @@
   .stagger.visible > *:nth-child(6){transition-delay:.68s;}
 
   /* ---------- SOBRE NOSOTROS ---------- */
-  .about{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
-  .about-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-pop);}
-  .about-photo img{width:100%;height:560px;object-fit:cover;}
-  .pills{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 26px;}
-  .pill{
-    font-size:.82rem;font-weight:600;padding:9px 18px;border-radius:var(--r-pill);
-    background:var(--white);border:1px solid var(--purple-300);color:var(--purple-700);
-  }
+  .about{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start;}
+  .about-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-pop);max-width:440px;margin:0 auto;}
+  .about-photo img{width:100%;height:auto;display:block;}
   .quote-card{
     margin-top:28px;padding:28px 30px;border-left:4px solid transparent;
     border-image:var(--gradient) 1;
@@ -289,9 +284,31 @@
   .quote-card cite{display:block;margin-top:14px;font-style:normal;font-weight:700;font-size:.85rem;color:var(--purple-700);}
 
   @media (max-width:980px){
-    .about{grid-template-columns:1fr;gap:40px;}
-    .about-photo img{height:340px;}
+    .about{grid-template-columns:1fr;gap:32px;}
+    .about-photo{max-width:340px;}
   }
+
+  /* ---------- NUESTRO EQUIPO ---------- */
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
+  .team-card{
+    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
+    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
+    border-radius:var(--r-lg);overflow:hidden;text-align:center;padding-bottom:24px;
+    box-shadow:0 18px 45px -25px rgba(0,0,0,.18);
+    transition:transform .7s var(--ease-soft), box-shadow .7s var(--ease-soft);
+  }
+  .team-card:hover{transform:translateY(-8px);box-shadow:0 28px 55px -20px var(--accent-border, rgba(0,0,0,.22));}
+  .team-photo{aspect-ratio:1/1;overflow:hidden;border-bottom:4px solid var(--accent, var(--purple-300));}
+  .team-photo img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-soft);}
+  .team-card:hover .team-photo img{transform:scale(1.07);}
+  .team-card h4{margin-top:20px;font-size:1.1rem;font-weight:800;color:var(--accent-dark, var(--ink));}
+  .team-tag{
+    display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;
+    padding:6px 14px;border-radius:var(--r-pill);
+    background:var(--accent-tint,var(--purple-50));color:var(--accent-dark,var(--purple-700));
+  }
+  @media (max-width:980px){.team-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.team-grid{grid-template-columns:1fr;}}
 
   /* ---------- SERVICIOS ---------- */
   .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px;}
@@ -355,6 +372,7 @@
     <a href="#" class="brand"><img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">Inka Trewa</a>
     <div class="nav-links">
       <a href="#sobre-nosotros">Sobre Nosotros</a>
+      <a href="#equipo">Nuestro Equipo</a>
       <a href="#servicios">Servicios</a>
       <a href="#contacto">Contacto</a>
     </div>
@@ -368,6 +386,7 @@
 
 <div class="mobile-menu glass" id="mobileMenu">
   <a href="#sobre-nosotros">Sobre Nosotros</a>
+  <a href="#equipo">Nuestro Equipo</a>
   <a href="#servicios">Servicios</a>
   <a href="#contacto">Contacto</a>
   <a href="https://wa.me/56950102463" target="_blank">WhatsApp</a>
@@ -413,11 +432,6 @@
       <span class="eyebrow">Sobre nosotros</span>
       <h2 class="section-title">Un vínculo que <span class="accent">transforma</span></h2>
       <p class="section-sub">Inka Trewa nace en Valdivia de la mano de <strong>Gabriela Álvarez</strong>, terapeuta ocupacional, educadora canina y especialista en intervención asistida con animales. Hoy lidera, junto a su equipo de perros de terapia, un trabajo que llega a espacios de salud, educación y trabajo en toda la región de Los Ríos.</p>
-      <div class="pills">
-        <span class="pill">Terapeuta Ocupacional</span>
-        <span class="pill">Educadora Canina</span>
-        <span class="pill">Intervención Asistida con Animales</span>
-      </div>
       <p class="section-sub">Nuestro equipo peludo de perros de terapia, entrenados por Gabriela, está presente en cada sesión, capacitación y visita que realizamos.</p>
       <div class="quote-card">
         “El perro fue mi compañero en una soledad no deseada, eso hizo clic para emprender en lo que hago ahora.”
@@ -426,6 +440,39 @@
     </div>
     <div class="about-photo reveal">
       <img src="assets/inka_trewa/foto-vinculo.png" alt="Vínculo humano-animal Inka Trewa">
+    </div>
+  </div>
+</section>
+
+<!-- ===== NUESTRO EQUIPO ===== -->
+<section id="equipo">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="eyebrow">Nuestro equipo</span>
+      <h2 class="section-title">El equipo peludo de Inka Trewa</h2>
+      <p class="section-sub" style="margin:0 auto;">Cuatro perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
+    </div>
+    <div class="team-grid stagger">
+      <div class="team-card accent-purple">
+        <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de terapia"></div>
+        <h4>Ina</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+      <div class="team-card accent-indigo">
+        <div class="team-photo"><img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de terapia"></div>
+        <h4>Roma</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+      <div class="team-card accent-sky">
+        <div class="team-photo"><img src="assets/inka_trewa/post_06.jpg" alt="Joy, perro de terapia"></div>
+        <h4>Joy</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+      <div class="team-card accent-teal">
+        <div class="team-photo"><img src="assets/inka_trewa/leia-crop.jpg" alt="Leia, perro de terapia"></div>
+        <h4>Leia</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
     </div>
   </div>
 </section>
