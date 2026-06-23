@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inka Trewa Valdivia · Intervención Asistida con Perros</title>
+<meta name="description" content="Inka Trewa — intervención asistida con perros desde Valdivia. Bienestar, salud y educación a través del vínculo humano-animal.">
+<link rel="icon" href="assets/inka_trewa/post_01.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple-700:#6D28D9;
+    --purple-600:#7C3AED;
+    --purple-400:#A78BFA;
+    --purple-300:#C4B5FD;
+    --purple-50:#F5F2FF;
+    --green-600:#059669;
+    --green-500:#10B981;
+    --green-300:#6EE7B7;
+    --green-50:#EFFDF7;
+    --celeste-700:#0369A1;
+    --celeste-500:#0EA5E9;
+    --celeste-300:#7DD3FC;
+    --celeste-50:#F0F9FF;
+    --indigo-700:#3730A3;
+    --indigo-500:#5B5BF0;
+    --indigo-300:#A5B4FC;
+    --teal-700:#0F766E;
+    --teal-500:#14B8A6;
+    --teal-300:#5EEAD4;
+    --ink:#1D1D1F;
+    --ink-soft:#6E6E73;
+    --white:#FFFFFF;
+    --gradient: linear-gradient(135deg, var(--purple-600) 0%, var(--green-500) 100%);
+    --r-sm:18px;
+    --r-md:26px;
+    --r-lg:36px;
+    --r-pill:999px;
+    --shadow-soft: 0 20px 60px -20px rgba(109,40,217,.22);
+    --shadow-pop: 0 30px 80px -25px rgba(109,40,217,.32);
+    --ease: cubic-bezier(.19,1,.22,1);
+    --ease-soft: cubic-bezier(.25,.46,.15,1);
+  }
+
+  /* Acentos "arcoíris de marca" — solo morado / verde / celeste y sus mezclas, con alto contraste */
+  .accent-purple{--accent:var(--purple-600);--accent-dark:var(--purple-700);--accent-tint:var(--purple-50);--accent-border:rgba(124,58,237,.32);}
+  .accent-indigo{--accent:var(--indigo-500);--accent-dark:var(--indigo-700);--accent-tint:#F1F1FF;--accent-border:rgba(91,91,240,.32);}
+  .accent-sky{--accent:var(--celeste-500);--accent-dark:var(--celeste-700);--accent-tint:var(--celeste-50);--accent-border:rgba(14,165,233,.32);}
+  .accent-teal{--accent:var(--teal-500);--accent-dark:var(--teal-700);--accent-tint:#EAFBF8;--accent-border:rgba(20,184,166,.32);}
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--purple-50);}
+  ::-webkit-scrollbar-thumb{background:var(--gradient);border-radius:var(--r-pill);}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1.05;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--purple-700);
+    background:var(--purple-50);
+    padding:8px 16px;border-radius:var(--r-pill);
+    margin-bottom:18px;
+  }
+  .section-title{font-size:clamp(2.1rem,4.2vw,3.2rem);margin-bottom:18px;}
+  .accent{
+    background:var(--gradient);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .section-sub{color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.15rem);max-width:620px;line-height:1.6;font-weight:400;}
+
+  section{position:relative;padding:120px 0;background:rgba(255,255,255,.74);}
+  .bg-purple{background:rgba(124,58,237,.07);}
+  .bg-green{background:rgba(16,185,129,.07);}
+
+  /* ---------- Aurora de fondo (liquid background en toda la página) ---------- */
+  .aurora-bg{
+    position:fixed;inset:0;z-index:-1;overflow:hidden;
+    background:linear-gradient(180deg, #FDFCFF 0%, #F6F1FF 35%, #F0FBF7 70%, #EFFBFF 100%);
+  }
+  .aurora-bg .blob-wrap{position:absolute;}
+
+  /* ---------- Liquid blobs ---------- */
+  .blob-wrap{
+    z-index:0;pointer-events:none;
+    will-change:transform;transition:transform 1.4s var(--ease-soft);
+  }
+  .blob{
+    border-radius:50%;
+    filter:blur(70px);opacity:.5;
+  }
+  @keyframes float1{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(36px,-42px) scale(1.06);}
+    66%{transform:translate(18px,18px) scale(.96);}
+  }
+  @keyframes float2{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(-40px,28px) scale(1.1);}
+    66%{transform:translate(-14px,-22px) scale(.94);}
+  }
+  @keyframes float3{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(-26px,-30px) scale(1.08);}
+    66%{transform:translate(30px,20px) scale(.95);}
+  }
+
+  /* ---------- Glass ---------- */
+  .glass{
+    background:rgba(255,255,255,.65);
+    backdrop-filter:blur(24px) saturate(160%);
+    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:var(--shadow-soft);
+    border-radius:var(--r-lg);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:15px 28px;border-radius:var(--r-pill);
+    font-weight:600;font-size:.95rem;
+    transition:transform .6s var(--ease-soft), box-shadow .6s var(--ease-soft), background .6s var(--ease-soft);
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--gradient);color:#fff;
+    box-shadow:0 14px 36px -10px rgba(124,58,237,.55);
+  }
+  .btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 46px -10px rgba(124,58,237,.6);}
+  .btn-glass{
+    background:rgba(255,255,255,.55);
+    border:1px solid rgba(109,40,217,.18);
+    color:var(--purple-700);
+    backdrop-filter:blur(10px);
+    transition:transform .6s var(--ease-soft), background .6s var(--ease-soft);
+  }
+  .btn-glass:hover{transform:translateY(-3px);background:rgba(255,255,255,.85);}
+  .btn-sm{padding:10px 20px;font-size:.85rem;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    padding:18px 0;
+    transition:background .7s var(--ease-soft), box-shadow .7s var(--ease-soft), padding .7s var(--ease-soft), backdrop-filter .7s var(--ease-soft);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;}
+  nav.scrolled{
+    background:rgba(255,255,255,.75);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    box-shadow:0 8px 30px -15px rgba(0,0,0,.12);
+    padding:12px 0;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;}
+  .brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;box-shadow:0 4px 14px rgba(109,40,217,.3);}
+  .nav-links{display:flex;align-items:center;gap:32px;font-size:.92rem;font-weight:500;}
+  .nav-links a{color:var(--ink-soft);transition:color .5s var(--ease-soft);position:relative;}
+  .nav-links a:hover{color:var(--purple-700);}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+  .burger{display:none;width:26px;height:20px;position:relative;flex-direction:column;justify-content:space-between;}
+  .burger span{display:block;height:2.4px;width:100%;background:var(--ink);border-radius:2px;transition:.4s var(--ease-soft);}
+
+  .mobile-menu{
+    display:none;position:fixed;top:74px;left:16px;right:16px;z-index:999;
+    flex-direction:column;gap:4px;padding:18px;
+  }
+  .mobile-menu a{padding:12px 10px;border-radius:14px;font-weight:600;color:var(--ink);}
+  .mobile-menu a:hover{background:var(--purple-50);}
+
+  @media (max-width:860px){
+    .nav-links, .nav-cta .btn-glass{display:none;}
+    .burger{display:flex;}
+    .mobile-menu.open{display:flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:170px 0 120px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
+  .hero-copy h1{font-size:clamp(2.5rem,4.6vw,3.8rem);margin:18px 0 22px;max-width:560px;}
+  .hero-copy .lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--ink-soft);max-width:520px;line-height:1.65;margin-bottom:34px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px;}
+  .hero-stats{display:flex;gap:38px;margin-bottom:30px;flex-wrap:wrap;}
+  .hero-stats div strong{display:block;font-size:1.5rem;font-weight:800;}
+  .hero-stats div span{font-size:.8rem;color:var(--ink-soft);}
+  .hero-ig-link{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--purple-700);font-size:.95rem;}
+  .hero-ig-link svg{width:20px;height:20px;}
+
+  .hero-visual{position:relative;}
+  .hero-photo{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-pop);aspect-ratio:4/5;}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;}
+  .hero-floating-badge{
+    position:absolute;bottom:-28px;left:-34px;
+    display:flex;align-items:center;gap:13px;padding:16px 22px;max-width:270px;
+  }
+  .hero-floating-badge img{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+  .hero-floating-badge strong{display:flex;align-items:center;gap:5px;font-size:.95rem;}
+  .hero-floating-badge .verified{width:16px;height:16px;flex-shrink:0;}
+  .hero-floating-badge span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:2px;}
+  @media (max-width:980px){
+    .hero{padding:150px 0 90px;}
+    .hero-grid{grid-template-columns:1fr;gap:50px;text-align:center;}
+    .hero-copy h1, .hero-copy .lead{margin-left:auto;margin-right:auto;}
+    .hero-actions, .hero-stats{justify-content:center;}
+    .hero-photo{aspect-ratio:1/1;max-width:420px;margin:0 auto;}
+    .hero-floating-badge{position:static;margin:22px auto 0;}
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1.2s var(--ease-soft), transform 1.2s var(--ease-soft);}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+  .stagger > *{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease-soft), transform 1s var(--ease-soft);}
+  .stagger.visible > *{opacity:1;transform:translateY(0);}
+  .stagger.visible > *:nth-child(1){transition-delay:.08s;}
+  .stagger.visible > *:nth-child(2){transition-delay:.2s;}
+  .stagger.visible > *:nth-child(3){transition-delay:.32s;}
+  .stagger.visible > *:nth-child(4){transition-delay:.44s;}
+  .stagger.visible > *:nth-child(5){transition-delay:.56s;}
+  .stagger.visible > *:nth-child(6){transition-delay:.68s;}
+
+  /* ---------- SOBRE NOSOTROS ---------- */
+  .about{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
+  .about-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-pop);}
+  .about-photo img{width:100%;height:560px;object-fit:cover;}
+  .pills{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 26px;}
+  .pill{
+    font-size:.82rem;font-weight:600;padding:9px 18px;border-radius:var(--r-pill);
+    background:var(--white);border:1px solid var(--purple-300);color:var(--purple-700);
+  }
+  .quote-card{
+    margin-top:28px;padding:28px 30px;border-left:4px solid transparent;
+    border-image:var(--gradient) 1;
+    background:var(--purple-50);border-radius:0 var(--r-md) var(--r-md) 0;
+    font-style:italic;font-size:1.02rem;line-height:1.6;color:var(--ink);
+  }
+  .quote-card cite{display:block;margin-top:14px;font-style:normal;font-weight:700;font-size:.85rem;color:var(--purple-700);}
+
+  @media (max-width:980px){
+    .about{grid-template-columns:1fr;gap:40px;}
+    .about-photo img{height:340px;}
+  }
+
+  /* ---------- NUESTRO EQUIPO ---------- */
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
+  .team-card{
+    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
+    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
+    border-radius:var(--r-lg);overflow:hidden;text-align:center;padding-bottom:24px;
+    box-shadow:0 18px 45px -25px rgba(0,0,0,.18);
+    transition:transform .7s var(--ease-soft), box-shadow .7s var(--ease-soft);
+  }
+  .team-card:hover{transform:translateY(-8px);box-shadow:0 28px 55px -20px var(--accent-border, rgba(0,0,0,.22));}
+  .team-photo{aspect-ratio:1/1;overflow:hidden;border-bottom:4px solid var(--accent, var(--purple-300));}
+  .team-photo img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-soft);}
+  .team-card:hover .team-photo img{transform:scale(1.07);}
+  .team-card h4{margin-top:20px;font-size:1.1rem;font-weight:800;color:var(--accent-dark, var(--ink));}
+  .team-tag{
+    display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;
+    padding:6px 14px;border-radius:var(--r-pill);
+    background:var(--accent-tint,var(--purple-50));color:var(--accent-dark,var(--purple-700));
+  }
+  @media (max-width:980px){.team-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.team-grid{grid-template-columns:1fr;}}
+
+  /* ---------- LO QUE HACEMOS ---------- */
+  .feature-row{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;margin-bottom:90px;}
+  .feature-photo{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-soft);}
+  .feature-photo img{width:100%;height:460px;object-fit:cover;}
+  .benefit-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;}
+  .benefit-list li{
+    display:flex;align-items:center;gap:10px;font-weight:600;font-size:.95rem;
+    background:#fff;border:1px solid rgba(109,40,217,.12);padding:14px 16px;border-radius:var(--r-sm);
+  }
+  @media (max-width:980px){
+    .feature-row{grid-template-columns:1fr;gap:30px;}
+    .feature-photo img{height:300px;}
+    .benefit-list{grid-template-columns:1fr;}
+  }
+
+  .alliances{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .alliance-card{
+    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 60%);
+    border-radius:var(--r-md);padding:28px 22px;
+    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
+    box-shadow:0 14px 40px -20px rgba(0,0,0,.12);
+    transition:transform .65s var(--ease-soft), box-shadow .65s var(--ease-soft);
+  }
+  .alliance-card:hover{transform:translateY(-8px);box-shadow:0 26px 50px -18px var(--accent-border, rgba(0,0,0,.18));}
+  .alliance-card .ic{
+    width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+    background:var(--accent, var(--gradient));font-size:1.4rem;margin-bottom:14px;
+    box-shadow:0 10px 22px -8px var(--accent-border, transparent);
+  }
+  .alliance-card h4{font-size:1rem;font-weight:800;margin-bottom:8px;color:var(--accent-dark, var(--ink));}
+  .alliance-card p{font-size:.85rem;color:var(--ink-soft);line-height:1.5;}
+  @media (max-width:980px){.alliances{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.alliances{grid-template-columns:1fr;}}
+
+  /* ---------- SERVICIOS ---------- */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px;}
+  .service-card{
+    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
+    border-radius:var(--r-lg);padding:38px 30px;
+    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
+    box-shadow:0 20px 50px -25px rgba(0,0,0,.15);
+    transition:transform .7s var(--ease-soft), box-shadow .7s var(--ease-soft);
+  }
+  .service-card:hover{transform:translateY(-10px);box-shadow:0 30px 60px -20px var(--accent-border, rgba(0,0,0,.2));}
+  .service-ic{
+    width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+    background:var(--accent, var(--gradient));font-size:1.6rem;margin-bottom:22px;
+    box-shadow:0 12px 26px -8px var(--accent-border, transparent);
+  }
+  .service-card h3{font-size:1.18rem;margin-bottom:12px;letter-spacing:-.01em;color:var(--accent-dark, var(--ink));}
+  .service-card p{color:var(--ink-soft);font-size:.92rem;line-height:1.6;}
+  @media (max-width:980px){.services-grid{grid-template-columns:1fr;}}
+
+  /* ---------- GALERIA ---------- */
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px;}
+  .gallery-item{
+    position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;
+    box-shadow:0 16px 40px -22px rgba(0,0,0,.25);
+  }
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-soft);}
+  .gallery-item:hover img{transform:scale(1.08);}
+  .gallery-cap{
+    position:absolute;left:0;right:0;bottom:0;padding:18px 16px;
+    background:linear-gradient(to top, rgba(29,29,31,.85), transparent);
+    color:#fff;font-size:.85rem;font-weight:600;
+    opacity:0;transform:translateY(10px);transition:.6s var(--ease-soft);
+  }
+  .gallery-item:hover .gallery-cap{opacity:1;transform:translateY(0);}
+  @media (max-width:860px){.gallery-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.gallery-grid{grid-template-columns:1fr;}}
+
+  /* ---------- CONTACTO ---------- */
+  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:stretch;}
+  .contact-card{padding:48px 44px;}
+  .contact-card h3{font-size:1.5rem;margin-bottom:10px;}
+  .contact-card p{color:var(--ink-soft);margin-bottom:30px;line-height:1.6;}
+  .contact-links{display:flex;flex-direction:column;gap:14px;margin-bottom:10px;}
+  .contact-link{
+    display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r-md);
+    background:#fff;border:1px solid rgba(0,0,0,.06);font-weight:600;
+    transition:transform .6s var(--ease-soft), box-shadow .6s var(--ease-soft);
+  }
+  .contact-link:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(109,40,217,.35);}
+  .contact-link .ic-circle{
+    width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--gradient);color:#fff;font-size:1.15rem;flex-shrink:0;
+  }
+  form{display:flex;flex-direction:column;gap:14px;}
+  form input, form textarea{
+    width:100%;padding:16px 18px;border-radius:var(--r-sm);border:1px solid rgba(0,0,0,.1);
+    font-family:inherit;font-size:.95rem;background:#fff;resize:vertical;
+    transition:border-color .5s var(--ease-soft), box-shadow .5s var(--ease-soft);
+  }
+  form input:focus, form textarea:focus{outline:none;border-color:var(--purple-400);box-shadow:0 0 0 4px rgba(124,58,237,.12);}
+  form button{margin-top:6px;}
+  @media (max-width:980px){.contact-wrap{grid-template-columns:1fr;}.contact-card{padding:36px 28px;}}
+
+  footer{padding:54px 0 36px;text-align:center;background:rgba(255,255,255,.55);}
+  footer .brand{justify-content:center;margin-bottom:18px;}
+  .foot-socials{display:flex;justify-content:center;gap:16px;margin-bottom:18px;}
+  .foot-socials a{
+    width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--purple-50);color:var(--purple-700);transition:transform .5s var(--ease-soft), background .5s var(--ease-soft);
+  }
+  .foot-socials a:hover{transform:translateY(-4px);background:var(--gradient);color:#fff;}
+  footer p{color:var(--ink-soft);font-size:.85rem;}
+</style>
+</head>
+<body>
+
+<!-- ===== AURORA: fondo líquido fijo para toda la página ===== -->
+<div class="aurora-bg" aria-hidden="true">
+  <div class="blob-wrap" data-speed="0.10" style="top:-100px;left:-160px;">
+    <div class="blob" style="width:520px;height:520px;background:var(--purple-300);animation:float1 24s ease-in-out infinite;"></div>
+  </div>
+  <div class="blob-wrap" data-speed="-0.08" style="top:14vh;right:-180px;">
+    <div class="blob" style="width:460px;height:460px;background:var(--celeste-300);animation:float2 28s ease-in-out infinite;"></div>
+  </div>
+  <div class="blob-wrap" data-speed="0.06" style="top:48vh;left:-140px;">
+    <div class="blob" style="width:480px;height:480px;background:var(--green-300);animation:float3 26s ease-in-out infinite;"></div>
+  </div>
+  <div class="blob-wrap" data-speed="-0.07" style="top:78vh;right:-130px;">
+    <div class="blob" style="width:420px;height:420px;background:var(--purple-300);animation:float2 22s ease-in-out infinite;"></div>
+  </div>
+  <div class="blob-wrap" data-speed="0.05" style="top:112vh;left:6vw;">
+    <div class="blob" style="width:400px;height:400px;background:var(--celeste-300);animation:float1 30s ease-in-out infinite;"></div>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav id="nav">
+  <div class="wrap">
+    <a href="#" class="brand"><img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">Inka Trewa</a>
+    <div class="nav-links">
+      <a href="#sobre-nosotros">Sobre Nosotros</a>
+      <a href="#equipo">Nuestro Equipo</a>
+      <a href="#lo-que-hacemos">Lo que Hacemos</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://wa.me/56950102463" target="_blank" class="btn btn-glass btn-sm">WhatsApp</a>
+      <a href="#contacto" class="btn btn-primary btn-sm">Escríbenos</a>
+      <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu glass" id="mobileMenu">
+  <a href="#sobre-nosotros">Sobre Nosotros</a>
+  <a href="#equipo">Nuestro Equipo</a>
+  <a href="#lo-que-hacemos">Lo que Hacemos</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#galeria">Galería</a>
+  <a href="#contacto">Contacto</a>
+  <a href="https://wa.me/56950102463" target="_blank">WhatsApp</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Inka Trewa · Valdivia, Chile</span>
+      <h1>Bienestar, salud y <span class="accent">educación</span> a través del vínculo humano-animal</h1>
+      <p class="lead">Acompañamos procesos terapéuticos, educativos y de salud junto a nuestro equipo de perros de terapia entrenados: Ina, Roma, Joy y Leia.</p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn btn-primary">Contactar</a>
+        <a href="#equipo" class="btn btn-glass">Conoce a nuestro equipo</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>94</strong><span>Publicaciones</span></div>
+        <div><strong>1.478</strong><span>Seguidores</span></div>
+        <div><strong>4</strong><span>Perros de terapia</span></div>
+      </div>
+      <a href="https://www.instagram.com/inka_trewa/" target="_blank" class="hero-ig-link">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>
+        @inka_trewa
+      </a>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-photo">
+        <img src="assets/inka_trewa/post_10.jpg" alt="Perro de terapia Inka Trewa">
+      </div>
+      <div class="hero-floating-badge glass">
+        <img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">
+        <div>
+          <strong>Inka Trewa
+            <svg class="verified" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#3897F0"/><path d="M7 12.5l3 3 7-7.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </strong>
+          <span>Intervención Asistida con Perros</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SOBRE NOSOTROS ===== -->
+<section id="sobre-nosotros">
+  <div class="wrap about">
+    <div class="reveal">
+      <span class="eyebrow">Sobre nosotros</span>
+      <h2 class="section-title">Un vínculo que <span class="accent">transforma</span></h2>
+      <p class="section-sub">Inka Trewa nace en Valdivia de la mano de <strong>Gabriela Álvarez</strong>, terapeuta ocupacional, educadora canina y especialista en intervención asistida con animales. Hoy lidera, junto a su equipo de perros de terapia, un trabajo que llega a espacios de salud, educación y trabajo en toda la región de Los Ríos.</p>
+      <div class="pills">
+        <span class="pill">Terapeuta Ocupacional</span>
+        <span class="pill">Educadora Canina</span>
+        <span class="pill">Intervención Asistida con Animales</span>
+      </div>
+      <p class="section-sub">Nuestro equipo peludo está formado por <strong>Ina, Roma, Joy y Leia</strong>, perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
+      <div class="quote-card">
+        “El perro fue mi compañero en una soledad no deseada, eso hizo clic para emprender en lo que hago ahora.”
+        <cite>— Gabriela Álvarez, terapeuta ocupacional</cite>
+      </div>
+    </div>
+    <div class="about-photo reveal">
+      <img src="assets/inka_trewa/foto-vinculo.png" alt="Vínculo humano-animal Inka Trewa">
+    </div>
+  </div>
+</section>
+
+<!-- ===== NUESTRO EQUIPO ===== -->
+<section id="equipo">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="eyebrow">Nuestro equipo</span>
+      <h2 class="section-title">El equipo peludo de Inka Trewa</h2>
+      <p class="section-sub" style="margin:0 auto;">Cuatro perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
+    </div>
+    <div class="team-grid stagger">
+      <div class="team-card accent-purple">
+        <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de terapia"></div>
+        <h4>Ina</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+      <div class="team-card accent-indigo">
+        <div class="team-photo"><img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de terapia"></div>
+        <h4>Roma</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+      <div class="team-card accent-sky">
+        <div class="team-photo"><img src="assets/inka_trewa/post_06.jpg" alt="Joy, perro de terapia"></div>
+        <h4>Joy</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+      <div class="team-card accent-teal">
+        <div class="team-photo"><img src="assets/inka_trewa/leia-crop.jpg" alt="Leia, perro de terapia"></div>
+        <h4>Leia</h4>
+        <span class="team-tag">Perro de terapia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LO QUE HACEMOS ===== -->
+<section id="lo-que-hacemos" class="bg-purple">
+  <div class="wrap">
+    <div class="feature-row">
+      <div class="feature-photo reveal">
+        <img src="assets/inka_trewa/post_06.jpg" alt="Perro de terapia Inka Trewa">
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Lo que hacemos</span>
+        <h2 class="section-title">¿Qué hace un perro de terapia en Inka Trewa?</h2>
+        <p class="section-sub">Mucho más de lo que imaginamos. Su presencia no es solo compañía: es un estímulo para que cada niño o niña siga avanzando hacia un nuevo comienzo, apoyando su rehabilitación y entregando bienestar a todos quienes participan de la intervención —como en nuestro trabajo junto a CONIN Valdivia.</p>
+        <p class="section-sub" style="margin-top:14px;">A través del juego, la interacción y el afecto, nuestros perros ayudan a promover:</p>
+        <ul class="benefit-list">
+          <li>🐾 Comunicación</li>
+          <li>🐾 Regulación emocional</li>
+          <li>🐾 Interacción social</li>
+          <li>🐾 Participación ocupacional</li>
+          <li>🐾 Motivación en terapia</li>
+          <li>🐾 Vínculos genuinos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" style="text-align:center;margin-bottom:10px;">
+      <span class="eyebrow">Alianzas reales</span>
+      <h3 style="font-size:1.6rem;font-weight:800;letter-spacing:-.02em;">Instituciones con las que trabajamos</h3>
+    </div>
+    <div class="alliances stagger">
+      <div class="alliance-card accent-purple">
+        <span class="ic">🏥</span>
+        <h4>CONIN Valdivia</h4>
+        <p>Intervención asistida con perros en hospitalización pediátrica.</p>
+      </div>
+      <div class="alliance-card accent-indigo">
+        <span class="ic">🎓</span>
+        <h4>Universidad San Sebastián</h4>
+        <p>Capacitaciones y diplomados en intervención asistida con perros.</p>
+      </div>
+      <div class="alliance-card accent-sky">
+        <span class="ic">🦷</span>
+        <h4>Diente de Arcoíris</h4>
+        <p>Acompañamiento terapéutico mensual en “Sábado de Patitas”.</p>
+      </div>
+      <div class="alliance-card accent-teal">
+        <span class="ic">🏨</span>
+        <h4>Hospital de Paillaco</h4>
+        <p>Apoyo en protocolo de reencuentro de niños hospitalizados con sus mascotas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICIOS ===== -->
+<section id="servicios">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="eyebrow">Servicios</span>
+      <h2 class="section-title">Cómo te acompañamos</h2>
+      <p class="section-sub" style="margin:0 auto;">Tres formas en las que llevamos el vínculo humano-animal a colegios, espacios de salud e instituciones.</p>
+    </div>
+    <div class="services-grid stagger">
+      <div class="service-card accent-purple">
+        <div class="service-ic">🏫</div>
+        <h3>Visitas a colegios y espacios de salud</h3>
+        <p>Charlas y actividades sobre tenencia responsable, autocuidado y salud mental, con nuestro equipo de perros de terapia.</p>
+      </div>
+      <div class="service-card accent-teal">
+        <div class="service-ic">🐾</div>
+        <h3>Intervención asistida con perros</h3>
+        <p>Acompañamiento terapéutico en hospitales y clínicas —como CONIN Valdivia y Hospital de Paillaco— que favorece la comunicación, regulación emocional y participación ocupacional.</p>
+      </div>
+      <div class="service-card accent-sky">
+        <div class="service-ic">🎓</div>
+        <h3>Capacitaciones y diplomados</h3>
+        <p>Formación en intervención asistida con perros junto a instituciones académicas, como nuestro trabajo con la Universidad San Sebastián.</p>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:48px;">
+      <a href="https://wa.me/56950102463" target="_blank" class="btn btn-primary">Cotiza tu programa por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALERIA ===== -->
+<section id="galeria" class="bg-green">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="eyebrow">Galería</span>
+      <h2 class="section-title">Nuestro trabajo en imágenes</h2>
+      <p class="section-sub" style="margin:0 auto;">Momentos reales de nuestras intervenciones, capacitaciones y del equipo peludo de Inka Trewa.</p>
+    </div>
+    <div class="gallery-grid stagger">
+      <div class="gallery-item"><img src="assets/inka_trewa/post_02.jpg" alt="Sesión de vínculo terapéutico"><div class="gallery-cap">Sesión de vínculo terapéutico</div></div>
+      <div class="gallery-item"><img src="assets/inka_trewa/post_06.jpg" alt="Acompañamiento en espacio de salud"><div class="gallery-cap">Acompañamiento en espacio de salud</div></div>
+      <div class="gallery-item"><img src="assets/inka_trewa/post_07.jpg" alt="Egreso del diplomado USS"><div class="gallery-cap">Egreso diplomado · Universidad San Sebastián</div></div>
+      <div class="gallery-item"><img src="assets/inka_trewa/post_08.jpg" alt="Capacitación Aula Magna"><div class="gallery-cap">Capacitación en Aula Magna</div></div>
+      <div class="gallery-item"><img src="assets/inka_trewa/post_10.jpg" alt="Equipo peludo Inka Trewa"><div class="gallery-cap">Nuestro equipo peludo</div></div>
+      <div class="gallery-item"><img src="assets/inka_trewa/post_11.jpg" alt="Vínculo humano-animal"><div class="gallery-cap">Vínculo humano-animal</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="contact-wrap">
+      <div class="contact-card glass reveal">
+        <span class="eyebrow">Contacto</span>
+        <h3>Hablemos sobre tu institución</h3>
+        <p>Escríbenos por WhatsApp o Instagram y conversemos sobre cómo nuestro equipo de perros de terapia puede acompañar tu colegio, clínica u hospital.</p>
+        <div class="contact-links">
+          <a href="https://wa.me/56950102463" target="_blank" class="contact-link">
+            <span class="ic-circle">💬</span> +56 9 5010 2463 · WhatsApp
+          </a>
+          <a href="https://www.instagram.com/inka_trewa/" target="_blank" class="contact-link">
+            <span class="ic-circle">📷</span> @inka_trewa · Instagram
+          </a>
+          <a href="#" class="contact-link">
+            <span class="ic-circle">📍</span> Valdivia, Región de Los Ríos, Chile
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-card glass reveal">
+        <span class="eyebrow">Escríbenos</span>
+        <h3>Cuéntanos tu idea</h3>
+        <p>Completa el formulario y se abrirá WhatsApp con tu mensaje listo para enviar.</p>
+        <form id="contactForm">
+          <input type="text" id="cf-name" placeholder="Tu nombre" required>
+          <input type="text" id="cf-org" placeholder="Institución (colegio, clínica, hospital...)">
+          <textarea id="cf-msg" rows="4" placeholder="Cuéntanos en qué te gustaría que te acompañemos" required></textarea>
+          <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#" class="brand"><img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">Inka Trewa</a>
+    <div class="foot-socials">
+      <a href="https://www.instagram.com/inka_trewa/" target="_blank" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>
+      </a>
+      <a href="https://wa.me/56950102463" target="_blank" aria-label="WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.3.7-1.4 1.4-2 1.5-.5.1-1.1.2-3.4-.8-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.2-1.6-1.2-3a3.3 3.3 0 0 1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.9.1.1.1.3 0 .4-.4.8-.8 1-1 1.2-.1.1-.2.3 0 .5.5 1 1.2 1.8 2.1 2.5.9.6 1.6.9 1.8 1 .2.1.4.1.5-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.2 1.4z"/></svg>
+      </a>
+    </div>
+    <p>Inka Trewa © 2026 — Intervención Asistida con Perros · Valdivia, Chile</p>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // Reveal + stagger on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
+
+  // Parallax blobs (rAF-throttled, eased via CSS transition on .blob-wrap)
+  const blobWraps = document.querySelectorAll('.blob-wrap');
+  let parallaxTicking = false;
+  window.addEventListener('scroll', () => {
+    if (parallaxTicking) return;
+    parallaxTicking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      blobWraps.forEach((b) => {
+        const speed = parseFloat(b.dataset.speed || '0.08');
+        b.style.transform = `translateY(${y * speed}px)`;
+      });
+      parallaxTicking = false;
+    });
+  });
+
+  // Contact form -> WhatsApp
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value;
+    const org = document.getElementById('cf-org').value;
+    const msg = document.getElementById('cf-msg').value;
+    const text = encodeURIComponent(`Hola Inka Trewa! Soy ${name}${org ? ' de ' + org : ''}. ${msg}`);
+    window.open(`https://wa.me/56950102463?text=${text}`, '_blank');
+  });
+</script>
+
+</body>
+</html>
