@@ -51,12 +51,14 @@
   .accent-teal{--accent:var(--teal-500);--accent-dark:var(--teal-700);--accent-tint:#EAFBF8;--accent-border:rgba(20,184,166,.32);}
 
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
   body{
     font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
     color:var(--ink);
     background:#FAFAF8;
     overflow-x:hidden;
+    width:100%;
+    position:relative;
     -webkit-font-smoothing:antialiased;
   }
   img{max-width:100%;display:block;}
@@ -101,6 +103,42 @@
   section{position:relative;padding:120px 0;background:rgba(255,255,255,.74);}
   .bg-purple{background:rgba(124,58,237,.07);}
   .bg-green{background:rgba(16,185,129,.07);}
+
+  /* ---------- Aurora de fondo (difuminado morado/verde en toda la web) ---------- */
+  .site-aurora{
+    position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  }
+  .site-aurora .blob{position:absolute;border-radius:50%;filter:blur(85px);}
+  .site-aurora .b1{
+    top:-120px;left:-140px;width:560px;height:560px;
+    background:radial-gradient(circle, rgba(196,181,253,.5) 0%, rgba(167,139,250,.16) 45%, transparent 70%);
+    animation:auroraFloat1 26s ease-in-out infinite;
+  }
+  .site-aurora .b2{
+    top:10vh;right:-160px;width:480px;height:480px;
+    background:radial-gradient(circle, rgba(110,231,183,.45) 0%, rgba(94,234,212,.14) 45%, transparent 70%);
+    animation:auroraFloat2 30s ease-in-out infinite;
+  }
+  .site-aurora .b3{
+    top:55vh;left:-150px;width:520px;height:520px;
+    background:radial-gradient(circle, rgba(196,181,253,.4) 0%, rgba(167,139,250,.12) 45%, transparent 70%);
+    animation:auroraFloat2 28s ease-in-out infinite reverse;
+  }
+  .site-aurora .b4{
+    bottom:-100px;right:-130px;width:480px;height:480px;
+    background:radial-gradient(circle, rgba(110,231,183,.4) 0%, rgba(94,234,212,.12) 45%, transparent 70%);
+    animation:auroraFloat1 24s ease-in-out infinite reverse;
+  }
+  @keyframes auroraFloat1{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(30px,-34px) scale(1.07);}
+    66%{transform:translate(14px,18px) scale(.96);}
+  }
+  @keyframes auroraFloat2{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(-32px,26px) scale(1.08);}
+    66%{transform:translate(-12px,-20px) scale(.95);}
+  }
 
   /* ---------- Glass ---------- */
   .glass{
@@ -191,26 +229,6 @@
     padding-bottom: max(60px, calc(60px + env(safe-area-inset-bottom)));
   }
   .hero > .wrap{position:relative;z-index:1;}
-  .hero-blob{
-    position:absolute;top:-100px;right:-160px;
-    width:600px;height:600px;border-radius:50%;
-    background:radial-gradient(circle, rgba(196,181,253,.35) 0%, rgba(167,139,250,.14) 42%, transparent 68%);
-    filter:blur(88px);
-    pointer-events:none;z-index:0;
-    animation:heroBlobPulse 20s ease-in-out infinite;
-  }
-  .hero-blob-2{
-    position:absolute;bottom:-60px;left:-80px;
-    width:420px;height:420px;border-radius:50%;
-    background:radial-gradient(circle, rgba(94,234,212,.18) 0%, rgba(94,234,212,.06) 42%, transparent 68%);
-    filter:blur(100px);
-    pointer-events:none;z-index:0;
-    animation:heroBlobPulse 24s ease-in-out infinite reverse;
-  }
-  @keyframes heroBlobPulse{
-    0%,100%{transform:scale(1);}
-    50%{transform:scale(1.07);}
-  }
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
   .hero-copy h1{font-size:clamp(2.5rem,4.6vw,3.8rem);margin:18px 0 22px;max-width:560px;}
   .hero-copy .lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--ink-soft);max-width:520px;line-height:1.65;margin-bottom:34px;}
@@ -316,9 +334,20 @@
   }
   .foot-socials a:hover{transform:translateY(-4px);background:var(--gradient);color:#fff;}
   footer p{color:var(--ink-soft);font-size:.85rem;}
+  .credit{margin-top:10px;font-size:.8rem;color:var(--ink-soft);}
+  .credit a{font-weight:700;color:var(--purple-700);transition:color .4s var(--ease-soft);}
+  .credit a:hover{color:var(--purple-600);text-decoration:underline;}
 </style>
 </head>
 <body>
+
+<!-- ===== AURORA: fondo difuminado morado/verde para toda la web ===== -->
+<div class="site-aurora" aria-hidden="true">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+</div>
 
 <!-- ===== NAV ===== -->
 <nav id="nav">
@@ -346,8 +375,6 @@
 
 <!-- ===== HERO ===== -->
 <header class="hero">
-  <div class="hero-blob" aria-hidden="true"></div>
-  <div class="hero-blob-2" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
       <span class="eyebrow hero-eyebrow">Inka Trewa · Valdivia, Chile</span>
@@ -461,6 +488,7 @@
       </a>
     </div>
     <p>Inka Trewa © 2026 — Intervención Asistida con Perros · Valdivia, Chile</p>
+    <p class="credit">Desarrollada por <a href="https://nvystudioss.vercel.app" target="_blank">NVY Studios</a></p>
   </div>
 </footer>
 
