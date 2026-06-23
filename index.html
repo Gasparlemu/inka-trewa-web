@@ -55,7 +55,7 @@
   body{
     font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
     color:var(--ink);
-    background:var(--white);
+    background:#FAFAF8;
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
@@ -72,55 +72,35 @@
 
   h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1.05;}
   .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    display:inline-flex;align-items:center;
+    font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
     color:var(--purple-700);
-    background:var(--purple-50);
-    padding:8px 16px;border-radius:var(--r-pill);
     margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:20px;height:2px;
+    background:var(--purple-600);
+    display:inline-block;
+    margin-right:10px;
+    border-radius:2px;
+    vertical-align:middle;
+  }
+  .hero-eyebrow::before{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--purple-600);
   }
   .section-title{font-size:clamp(2.1rem,4.2vw,3.2rem);margin-bottom:18px;}
   .accent{
-    background:var(--gradient);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
+    color:var(--purple-600);
+    font-style:italic;
   }
   .section-sub{color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.15rem);max-width:620px;line-height:1.6;font-weight:400;}
 
   section{position:relative;padding:120px 0;background:rgba(255,255,255,.74);}
   .bg-purple{background:rgba(124,58,237,.07);}
   .bg-green{background:rgba(16,185,129,.07);}
-
-  /* ---------- Aurora de fondo (liquid background en toda la página) ---------- */
-  .aurora-bg{
-    position:fixed;inset:0;z-index:-1;overflow:hidden;
-    background:linear-gradient(180deg, #FDFCFF 0%, #F6F1FF 35%, #F0FBF7 70%, #EFFBFF 100%);
-  }
-  .aurora-bg .blob-wrap{position:absolute;}
-
-  /* ---------- Liquid blobs ---------- */
-  .blob-wrap{
-    z-index:0;pointer-events:none;
-    will-change:transform;transition:transform 1.4s var(--ease-soft);
-  }
-  .blob{
-    border-radius:50%;
-    filter:blur(70px);opacity:.5;
-  }
-  @keyframes float1{
-    0%,100%{transform:translate(0,0) scale(1);}
-    33%{transform:translate(36px,-42px) scale(1.06);}
-    66%{transform:translate(18px,18px) scale(.96);}
-  }
-  @keyframes float2{
-    0%,100%{transform:translate(0,0) scale(1);}
-    33%{transform:translate(-40px,28px) scale(1.1);}
-    66%{transform:translate(-14px,-22px) scale(.94);}
-  }
-  @keyframes float3{
-    0%,100%{transform:translate(0,0) scale(1);}
-    33%{transform:translate(-26px,-30px) scale(1.08);}
-    66%{transform:translate(30px,20px) scale(.95);}
-  }
 
   /* ---------- Glass ---------- */
   .glass{
@@ -141,7 +121,8 @@
     white-space:nowrap;
   }
   .btn-primary{
-    background:var(--gradient);color:#fff;
+    background:var(--purple-600);color:#fff;
+    border-radius:10px;
     box-shadow:0 14px 36px -10px rgba(124,58,237,.55);
   }
   .btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 46px -10px rgba(124,58,237,.6);}
@@ -154,11 +135,20 @@
   }
   .btn-glass:hover{transform:translateY(-3px);background:rgba(255,255,255,.85);}
   .btn-sm{padding:10px 20px;font-size:.85rem;}
+  .btn-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-weight:600;color:var(--ink);
+    border-bottom:2px solid rgba(109,40,217,.22);
+    padding-bottom:2px;
+    transition:color .4s var(--ease-soft), border-color .4s var(--ease-soft), gap .4s var(--ease-soft);
+  }
+  .btn-link:hover{color:var(--purple-700);border-color:var(--purple-600);gap:10px;}
 
   /* ---------- NAV ---------- */
   nav{
     position:fixed;top:0;left:0;right:0;z-index:1000;
     padding:18px 0;
+    padding-top: max(16px, env(safe-area-inset-top));
     transition:background .7s var(--ease-soft), box-shadow .7s var(--ease-soft), padding .7s var(--ease-soft), backdrop-filter .7s var(--ease-soft);
   }
   nav .wrap{display:flex;align-items:center;justify-content:space-between;}
@@ -168,6 +158,7 @@
     -webkit-backdrop-filter:blur(20px) saturate(180%);
     box-shadow:0 8px 30px -15px rgba(0,0,0,.12);
     padding:12px 0;
+    padding-top: max(16px, env(safe-area-inset-top));
   }
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;}
   .brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;box-shadow:0 4px 14px rgba(109,40,217,.3);}
@@ -192,11 +183,38 @@
   }
 
   /* ---------- HERO ---------- */
-  .hero{padding:170px 0 120px;}
+  .hero{
+    position:relative;overflow:hidden;
+    min-height:-webkit-fill-available;
+    min-height:100svh;
+    padding-top: max(88px, calc(88px + env(safe-area-inset-top)));
+    padding-bottom: max(60px, calc(60px + env(safe-area-inset-bottom)));
+  }
+  .hero > .wrap{position:relative;z-index:1;}
+  .hero-blob{
+    position:absolute;top:-100px;right:-160px;
+    width:600px;height:600px;border-radius:50%;
+    background:radial-gradient(circle, rgba(196,181,253,.35) 0%, rgba(167,139,250,.14) 42%, transparent 68%);
+    filter:blur(88px);
+    pointer-events:none;z-index:0;
+    animation:heroBlobPulse 20s ease-in-out infinite;
+  }
+  .hero-blob-2{
+    position:absolute;bottom:-60px;left:-80px;
+    width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle, rgba(94,234,212,.18) 0%, rgba(94,234,212,.06) 42%, transparent 68%);
+    filter:blur(100px);
+    pointer-events:none;z-index:0;
+    animation:heroBlobPulse 24s ease-in-out infinite reverse;
+  }
+  @keyframes heroBlobPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.07);}
+  }
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
   .hero-copy h1{font-size:clamp(2.5rem,4.6vw,3.8rem);margin:18px 0 22px;max-width:560px;}
   .hero-copy .lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--ink-soft);max-width:520px;line-height:1.65;margin-bottom:34px;}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px;}
+  .hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:38px;}
   .hero-stats{display:flex;gap:38px;margin-bottom:30px;flex-wrap:wrap;}
   .hero-stats div strong{display:block;font-size:1.5rem;font-weight:800;}
   .hero-stats div span{font-size:.8rem;color:var(--ink-soft);}
@@ -215,7 +233,10 @@
   .hero-floating-badge .verified{width:16px;height:16px;flex-shrink:0;}
   .hero-floating-badge span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:2px;}
   @media (max-width:980px){
-    .hero{padding:150px 0 90px;}
+    .hero{
+      padding-top: max(78px, calc(78px + env(safe-area-inset-top)));
+      padding-bottom: max(50px, calc(50px + env(safe-area-inset-bottom)));
+    }
     .hero-grid{grid-template-columns:1fr;gap:50px;text-align:center;}
     .hero-copy h1, .hero-copy .lead{margin-left:auto;margin-right:auto;}
     .hero-actions, .hero-stats{justify-content:center;}
@@ -376,7 +397,10 @@
   form button{margin-top:6px;}
   @media (max-width:980px){.contact-wrap{grid-template-columns:1fr;}.contact-card{padding:36px 28px;}}
 
-  footer{padding:54px 0 36px;text-align:center;background:rgba(255,255,255,.55);}
+  footer{
+    padding:54px 0 36px;text-align:center;background:rgba(255,255,255,.55);
+    padding-bottom: max(30px, calc(30px + env(safe-area-inset-bottom)));
+  }
   footer .brand{justify-content:center;margin-bottom:18px;}
   .foot-socials{display:flex;justify-content:center;gap:16px;margin-bottom:18px;}
   .foot-socials a{
@@ -388,25 +412,6 @@
 </style>
 </head>
 <body>
-
-<!-- ===== AURORA: fondo líquido fijo para toda la página ===== -->
-<div class="aurora-bg" aria-hidden="true">
-  <div class="blob-wrap" data-speed="0.10" style="top:-100px;left:-160px;">
-    <div class="blob" style="width:520px;height:520px;background:var(--purple-300);animation:float1 24s ease-in-out infinite;"></div>
-  </div>
-  <div class="blob-wrap" data-speed="-0.08" style="top:14vh;right:-180px;">
-    <div class="blob" style="width:460px;height:460px;background:var(--celeste-300);animation:float2 28s ease-in-out infinite;"></div>
-  </div>
-  <div class="blob-wrap" data-speed="0.06" style="top:48vh;left:-140px;">
-    <div class="blob" style="width:480px;height:480px;background:var(--green-300);animation:float3 26s ease-in-out infinite;"></div>
-  </div>
-  <div class="blob-wrap" data-speed="-0.07" style="top:78vh;right:-130px;">
-    <div class="blob" style="width:420px;height:420px;background:var(--purple-300);animation:float2 22s ease-in-out infinite;"></div>
-  </div>
-  <div class="blob-wrap" data-speed="0.05" style="top:112vh;left:6vw;">
-    <div class="blob" style="width:400px;height:400px;background:var(--celeste-300);animation:float1 30s ease-in-out infinite;"></div>
-  </div>
-</div>
 
 <!-- ===== NAV ===== -->
 <nav id="nav">
@@ -440,14 +445,16 @@
 
 <!-- ===== HERO ===== -->
 <header class="hero">
+  <div class="hero-blob" aria-hidden="true"></div>
+  <div class="hero-blob-2" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
-      <span class="eyebrow">Inka Trewa · Valdivia, Chile</span>
+      <span class="eyebrow hero-eyebrow">Inka Trewa · Valdivia, Chile</span>
       <h1>Bienestar, salud y <span class="accent">educación</span> a través del vínculo humano-animal</h1>
       <p class="lead">Acompañamos procesos terapéuticos, educativos y de salud junto a nuestro equipo de perros de terapia entrenados: Ina, Roma, Joy y Leia.</p>
       <div class="hero-actions">
         <a href="#contacto" class="btn btn-primary">Contactar</a>
-        <a href="#equipo" class="btn btn-glass">Conoce a nuestro equipo</a>
+        <a href="#equipo" class="btn-link">Conoce al equipo <span>→</span></a>
       </div>
       <div class="hero-stats">
         <div><strong>94</strong><span>Publicaciones</span></div>
@@ -709,22 +716,6 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
-
-  // Parallax blobs (rAF-throttled, eased via CSS transition on .blob-wrap)
-  const blobWraps = document.querySelectorAll('.blob-wrap');
-  let parallaxTicking = false;
-  window.addEventListener('scroll', () => {
-    if (parallaxTicking) return;
-    parallaxTicking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      blobWraps.forEach((b) => {
-        const speed = parseFloat(b.dataset.speed || '0.08');
-        b.style.transform = `translateY(${y * speed}px)`;
-      });
-      parallaxTicking = false;
-    });
-  });
 
   // Contact form -> WhatsApp
   document.getElementById('contactForm').addEventListener('submit', (e) => {
