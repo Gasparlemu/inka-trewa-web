@@ -275,13 +275,6 @@
   .about{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start;}
   .about-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-pop);max-width:440px;margin:0 auto;}
   .about-photo img{width:100%;height:auto;display:block;}
-  .quote-card{
-    margin-top:28px;padding:28px 30px;border-left:4px solid transparent;
-    border-image:var(--gradient) 1;
-    background:var(--purple-50);border-radius:0 var(--r-md) var(--r-md) 0;
-    font-style:italic;font-size:1.02rem;line-height:1.6;color:var(--ink);
-  }
-  .quote-card cite{display:block;margin-top:14px;font-style:normal;font-weight:700;font-size:.85rem;color:var(--purple-700);}
 
   @media (max-width:980px){
     .about{grid-template-columns:1fr;gap:32px;}
@@ -289,7 +282,7 @@
   }
 
   /* ---------- NUESTRO EQUIPO ---------- */
-  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
   .team-card{
     background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
     border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
@@ -307,8 +300,7 @@
     padding:6px 14px;border-radius:var(--r-pill);
     background:var(--accent-tint,var(--purple-50));color:var(--accent-dark,var(--purple-700));
   }
-  @media (max-width:980px){.team-grid{grid-template-columns:1fr 1fr;}}
-  @media (max-width:560px){.team-grid{grid-template-columns:1fr;}}
+  @media (max-width:980px){.team-grid{grid-template-columns:1fr;}}
 
   /* ---------- SERVICIOS ---------- */
   .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px;}
@@ -433,13 +425,9 @@
       <h2 class="section-title">Un vínculo que <span class="accent">transforma</span></h2>
       <p class="section-sub">Inka Trewa nace en Valdivia de la mano de <strong>Gabriela Álvarez</strong>, terapeuta ocupacional, educadora canina y especialista en intervención asistida con animales. Hoy lidera, junto a su equipo de perros de terapia, un trabajo que llega a espacios de salud, educación y trabajo en toda la región de Los Ríos.</p>
       <p class="section-sub">Nuestro equipo peludo de perros de terapia, entrenados por Gabriela, está presente en cada sesión, capacitación y visita que realizamos.</p>
-      <div class="quote-card">
-        “El perro fue mi compañero en una soledad no deseada, eso hizo clic para emprender en lo que hago ahora.”
-        <cite>— Gabriela Álvarez, terapeuta ocupacional</cite>
-      </div>
     </div>
     <div class="about-photo reveal">
-      <img src="assets/inka_trewa/foto-vinculo.png" alt="Vínculo humano-animal Inka Trewa">
+      <img src="assets/inka_trewa/leia-crop.jpg" alt="Perro de terapia Inka Trewa">
     </div>
   </div>
 </section>
@@ -450,14 +438,9 @@
     <div class="reveal" style="text-align:center;">
       <span class="eyebrow">Nuestro equipo</span>
       <h2 class="section-title">El equipo peludo de Inka Trewa</h2>
-      <p class="section-sub" style="margin:0 auto;">Cuatro perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
+      <p class="section-sub" style="margin:0 auto;">Tres perros de terapia entrenados por Gabriela, presentes en cada sesión, capacitación y visita que realizamos.</p>
     </div>
     <div class="team-grid stagger">
-      <div class="team-card accent-purple">
-        <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de terapia"></div>
-        <h4>Ina</h4>
-        <span class="team-tag">Perro de terapia</span>
-      </div>
       <div class="team-card accent-indigo">
         <div class="team-photo"><img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de terapia"></div>
         <h4>Roma</h4>
