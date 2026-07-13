@@ -285,10 +285,12 @@
   /* ---------- NUESTRO EQUIPO ---------- */
   .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
   .team-card{
-    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
-    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
+    background:linear-gradient(165deg, var(--accent-tint,rgba(255,255,255,.5)) 0%, rgba(255,255,255,.35) 60%);
+    backdrop-filter:blur(22px) saturate(180%);
+    -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,.55);
     border-radius:var(--r-lg);overflow:hidden;text-align:center;padding-bottom:24px;
-    box-shadow:0 18px 45px -25px rgba(0,0,0,.18);
+    box-shadow:0 18px 45px -25px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
     transition:transform .2s var(--ease-out-hover);
   }
   .team-card:hover{transform:translateY(-8px);}
@@ -308,15 +310,19 @@
   .services-list{
     display:flex;flex-direction:column;margin-top:50px;
     border-radius:var(--r-lg);overflow:hidden;
-    background:#fff;box-shadow:0 20px 50px -30px rgba(0,0,0,.15);
+    background:rgba(255,255,255,.45);
+    backdrop-filter:blur(24px) saturate(180%);
+    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 20px 50px -30px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6);
   }
   .service-row{
     display:flex;align-items:flex-start;gap:26px;padding:34px 38px;
-    border-bottom:1px solid rgba(0,0,0,.06);
+    border-bottom:1px solid rgba(255,255,255,.4);
     transition:background .2s var(--ease-out-hover);
   }
   .service-row:last-child{border-bottom:none;}
-  .service-row:hover{background:var(--accent-tint,var(--purple-50));}
+  .service-row:hover{background:rgba(255,255,255,.3);}
   .service-ic{
     width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
     background:var(--accent, var(--gradient));flex-shrink:0;
@@ -497,21 +503,21 @@
         <div class="service-ic"><svg viewBox="0 0 24 24"><path d="M20.5 8.5c0-2.5-2-4.5-4.5-4.5-1.6 0-3 .8-3.8 2.1C11.4 4.8 10 4 8.4 4 5.9 4 4 6 4 8.5c0 4.7 6 9.2 8 10.6 2-1.4 8-5.9 8-10.6Z"/><path d="M9.5 10h1.4l1-1.8 1.6 3.2 1-1.4h1"/></svg></div>
         <div class="service-row-body">
           <h3>Salud</h3>
-          <p>Intervenciones asistidas con perros en hospitales, centros de rehabilitación, atención primaria y organizaciones de salud.</p>
+          <p>Intervenciones asistidas con perros en hospitales, centros de rehabilitación, atención primaria y organizaciones de salud, promoviendo procesos de recuperación, bienestar y humanización.</p>
         </div>
       </div>
       <div class="service-row accent-teal">
         <div class="service-ic"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M22 10v5"/><path d="M6 12.2V17c3 2.6 9 2.6 12 0v-4.8"/></svg></div>
         <div class="service-row-body">
           <h3>Educación</h3>
-          <p>Programas para jardines infantiles, colegios, universidades y centros educativos.</p>
+          <p>Programas para jardines infantiles, colegios, universidades y centros educativos orientados al aprendizaje, desarrollo socioemocional y convivencia.</p>
         </div>
       </div>
       <div class="service-row accent-sky">
         <div class="service-ic"><svg viewBox="0 0 24 24"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="9.5" cy="9.5" r="3"/><path d="M19 20v-1.5a3.2 3.2 0 0 0-2.2-3"/><path d="M14.5 6.6a3 3 0 0 1 0 5.8"/></svg></div>
         <div class="service-row-body">
           <h3>Comunidad y Bienestar</h3>
-          <p>Actividades para municipios, fundaciones, empresas y organizaciones que buscan acercar el bienestar animal a sus comunidades.</p>
+          <p>Actividades para municipios, fundaciones, empresas y organizaciones que buscan fortalecer el bienestar, la inclusión y la participación de las personas.</p>
         </div>
       </div>
       <div class="service-row accent-indigo">
