@@ -283,32 +283,26 @@
   }
 
   /* ---------- NUESTRO EQUIPO ---------- */
-  .team-strip{
-    display:flex;gap:20px;margin-top:50px;
-    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-    padding-bottom:10px;
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
+  .team-card{
+    background:linear-gradient(165deg, var(--accent-tint,#fff) 0%, #fff 55%);
+    border:1.5px solid var(--accent-border, rgba(0,0,0,.06));
+    border-radius:var(--r-lg);overflow:hidden;text-align:center;padding-bottom:24px;
+    box-shadow:0 18px 45px -25px rgba(0,0,0,.18);
+    transition:transform .2s var(--ease-out-hover);
   }
-  .team-strip::-webkit-scrollbar{height:8px;}
-  .team-strip::-webkit-scrollbar-thumb{background:var(--purple-300);border-radius:var(--r-pill);}
-  .team-slide{
-    position:relative;flex:0 0 auto;width:300px;aspect-ratio:3/4;
-    border-radius:var(--r-lg);overflow:hidden;scroll-snap-align:start;
-    box-shadow:var(--shadow-soft);
-  }
-  .team-slide img{width:100%;height:100%;object-fit:cover;transition:transform .2s var(--ease-out-hover);}
-  .team-slide:hover img{transform:scale(1.04);}
-  .team-slide-info{
-    position:absolute;left:0;right:0;bottom:0;padding:22px;
-    background:linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,0) 65%);
-  }
-  .team-slide-info h4{color:#fff;font-size:1.15rem;font-weight:800;}
+  .team-card:hover{transform:translateY(-8px);}
+  .team-photo{aspect-ratio:1/1;overflow:hidden;border-bottom:4px solid var(--accent, var(--purple-300));}
+  .team-photo img{width:100%;height:100%;object-fit:cover;transition:transform .2s var(--ease-out-hover);}
+  .team-card:hover .team-photo img{transform:scale(1.07);}
+  .team-card h4{margin-top:20px;font-size:1.1rem;font-weight:800;color:var(--accent-dark, var(--ink));}
   .team-tag{
     display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;
     padding:6px 14px;border-radius:var(--r-pill);
     background:var(--accent-tint,var(--purple-50));color:var(--accent-dark,var(--purple-700));
   }
-  .team-slide .team-tag{background:var(--accent, rgba(255,255,255,.25));color:#fff;}
-  @media (max-width:560px){.team-slide{width:78vw;}}
+  @media (max-width:980px){.team-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.team-grid{grid-template-columns:1fr;}}
 
   /* ---------- SERVICIOS ---------- */
   .services-list{
@@ -465,34 +459,26 @@
       <h2 class="section-title">El equipo peludo de Inka Trewa</h2>
       <p class="section-sub" style="margin:0 auto;">Nuestros perros de intervención forman parte de un proceso de selección y formación basado en el vínculo, el refuerzo positivo y el bienestar animal. Cada uno participa respetando sus capacidades, preferencias y necesidades, para ofrecer intervenciones seguras, éticas y de calidad.</p>
     </div>
-    <div class="team-strip stagger">
-      <div class="team-slide accent-indigo">
-        <img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de intervención" loading="lazy">
-        <div class="team-slide-info">
-          <h4>Roma</h4>
-          <span class="team-tag">Perro de intervención</span>
-        </div>
+    <div class="team-grid stagger">
+      <div class="team-card accent-indigo">
+        <div class="team-photo"><img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de intervención" loading="lazy"></div>
+        <h4>Roma</h4>
+        <span class="team-tag">Perro de intervención</span>
       </div>
-      <div class="team-slide accent-sky">
-        <img src="assets/inka_trewa/post_06.jpg" alt="Joy, perro de intervención" loading="lazy">
-        <div class="team-slide-info">
-          <h4>Joy</h4>
-          <span class="team-tag">Perro de intervención</span>
-        </div>
+      <div class="team-card accent-sky">
+        <div class="team-photo"><img src="assets/inka_trewa/post_06.jpg" alt="Joy, perro de intervención" loading="lazy"></div>
+        <h4>Joy</h4>
+        <span class="team-tag">Perro de intervención</span>
       </div>
-      <div class="team-slide accent-teal">
-        <img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de intervención" loading="lazy">
-        <div class="team-slide-info">
-          <h4>Ina</h4>
-          <span class="team-tag">Perro de intervención</span>
-        </div>
+      <div class="team-card accent-teal">
+        <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de intervención" loading="lazy"></div>
+        <h4>Ina</h4>
+        <span class="team-tag">Perro de intervención</span>
       </div>
-      <div class="team-slide accent-purple">
-        <img src="assets/inka_trewa/maximo.jpg" alt="Máximo, perro de intervención" loading="lazy">
-        <div class="team-slide-info">
-          <h4>Máximo</h4>
-          <span class="team-tag">Perro de intervención</span>
-        </div>
+      <div class="team-card accent-purple">
+        <div class="team-photo"><img src="assets/inka_trewa/maximo.jpg" alt="Máximo, perro de intervención" loading="lazy"></div>
+        <h4>Máximo</h4>
+        <span class="team-tag">Perro de intervención</span>
       </div>
     </div>
   </div>
