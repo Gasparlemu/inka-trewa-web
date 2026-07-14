@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 <style>
   :root{
     --purple-700:#6D28D9;
@@ -40,11 +41,14 @@
     --r-pill:999px;
     --shadow-soft: 0 20px 60px -20px rgba(109,40,217,.22);
     --shadow-pop: 0 30px 80px -25px rgba(109,40,217,.32);
-    --ease: cubic-bezier(.19,1,.22,1);
+    --ease: cubic-bezier(.22,1,.36,1);
     --ease-soft: cubic-bezier(.25,.46,.15,1);
     --ease-out-hover: cubic-bezier(.16,1,.3,1);
     --ease-apple: cubic-bezier(.22,1,.36,1);
     --ease-liquid: cubic-bezier(.25,.8,.25,1);
+    --dur-micro: .22s;
+    --dur-reveal: .78s;
+    --dur-composition: .88s;
   }
 
   /* Acentos "arcoíris de marca" — solo morado / verde / celeste y sus mezclas, con alto contraste */
@@ -68,6 +72,7 @@
   a{text-decoration:none;color:inherit;}
   ul{list-style:none;}
   button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--purple-600);outline-offset:2px;border-radius:4px;}
 
   ::-webkit-scrollbar{width:10px;}
   ::-webkit-scrollbar-track{background:var(--purple-50);}
@@ -164,42 +169,52 @@
     border-radius:var(--r-lg);
   }
 
-  /* ---------- Buttons (solo transform como propiedad animada) ---------- */
+  /* ---------- Buttons (CSS puro: respuesta inmediata, retorno suave) ---------- */
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
     padding:15px 28px;border-radius:var(--r-pill);
     font-weight:600;font-size:.95rem;
-    transition:transform .2s var(--ease-out-hover);
+    transition:transform .32s var(--ease-out-hover), box-shadow .32s var(--ease-out-hover);
     white-space:nowrap;
   }
+  .btn:focus-visible{outline:2px solid var(--purple-600);outline-offset:3px;}
   .btn-primary{
     background:var(--purple-600);color:#fff;
     border-radius:10px;
     box-shadow:0 14px 36px -10px rgba(124,58,237,.55);
   }
-  .btn-primary:hover{transform:translateY(-3px) scale(1.02);}
   .btn-glass{
     background:rgba(255,255,255,.55);
     border:1px solid rgba(109,40,217,.18);
     color:var(--purple-700);
     backdrop-filter:blur(10px);
-    transition:transform .2s var(--ease-out-hover);
   }
-  .btn-glass:hover{transform:translateY(-3px);}
+  @media (hover:hover) and (pointer:fine){
+    .btn:hover{transition-duration:.18s;}
+    .btn-primary:hover{transform:translate3d(0,-3px,0) scale(1.01);box-shadow:0 18px 44px -10px rgba(124,58,237,.6);}
+    .btn-glass:hover{transform:translate3d(0,-3px,0);}
+  }
+  .btn:active{transform:translate3d(0,-1px,0) scale(.98);transition-duration:.08s;}
   .btn-sm{padding:10px 20px;font-size:.85rem;}
   .btn-link{
     display:inline-flex;align-items:center;gap:6px;
     font-weight:600;color:var(--ink);
-    transition:transform .3s var(--ease-soft);
+    transition:color var(--dur-micro) var(--ease-out-hover);
   }
-  .btn-link:hover{transform:translateX(4px);color:var(--purple-700);}
+  .btn-link:focus-visible{outline:2px solid var(--purple-600);outline-offset:4px;border-radius:4px;}
+  .btn-link:hover{color:var(--purple-700);}
+  .btn-link span{display:inline-block;transition:transform var(--dur-micro) var(--ease-out-hover);}
+  .btn-link:hover span{transform:translateX(4px);}
 
   /* ---------- NAV (pill flotante) ---------- */
   nav{
     position:fixed;top:0;left:0;right:0;z-index:1000;
     padding:16px 20px 0;
     padding-top: max(16px, env(safe-area-inset-top));
+    opacity:0;transform:translateY(-14px);
+    animation:navIn .7s var(--ease-apple) .05s forwards;
   }
+  @keyframes navIn{to{opacity:1;transform:translateY(0);}}
   .nav-pill{
     max-width:1180px;margin:0 auto;
     display:flex;align-items:center;justify-content:space-between;
@@ -224,6 +239,8 @@
     transition:opacity .25s var(--ease-out-hover), transform .25s var(--ease-out-hover);
   }
   .nav-links a:hover::after{opacity:1;transform:translate(-50%,0);}
+  .nav-links a.active{color:var(--purple-700);}
+  .nav-links a.active::after{opacity:1;transform:translate(-50%,0);}
   .nav-cta{display:flex;align-items:center;gap:12px;}
   .burger{display:none;width:24px;height:18px;position:relative;flex-direction:column;justify-content:space-between;}
   .burger span{display:block;height:2.4px;width:100%;background:var(--ink);border-radius:2px;}
@@ -284,41 +301,130 @@
     .hero-floating-badge{position:static;margin:22px auto 0;}
   }
 
-  /* ---------- REVEAL ---------- */
-  .reveal{
-    opacity:0;transform:translateY(36px) scale(.97);
-    transition:opacity .95s var(--ease-apple), transform .95s var(--ease-apple);
+  /* ---------- HERO: secuencia orquestada (solo transform/opacity/clip-path) ---------- */
+  .hero-seq > *{
+    opacity:0;transform:translateY(24px);
+    transition:opacity var(--dur-composition) var(--ease-apple), transform var(--dur-composition) var(--ease-apple);
   }
-  .reveal.visible{opacity:1;transform:translateY(0) scale(1);}
-  .stagger > *{
-    opacity:0;transform:translateY(30px) scale(.97);
-    transition:opacity .8s var(--ease-apple), transform .8s var(--ease-apple);
-  }
-  .stagger.visible > *{opacity:1;transform:translateY(0) scale(1);}
-  .stagger.visible > *:nth-child(1){transition-delay:.08s;}
-  .stagger.visible > *:nth-child(2){transition-delay:.17s;}
-  .stagger.visible > *:nth-child(3){transition-delay:.26s;}
-  .stagger.visible > *:nth-child(4){transition-delay:.35s;}
-  .stagger.visible > *:nth-child(5){transition-delay:.44s;}
-  .stagger.visible > *:nth-child(6){transition-delay:.53s;}
+  .hero-seq.visible > *{opacity:1;transform:translateY(0);}
+  /* el h1 vive dentro de .mask-reveal: ese hijo no debe fade+translateY como bloque, solo el texto interno se desliza */
+  .hero-seq > .mask-reveal{opacity:1;transform:none;transition:none;}
+  .hero-copy.hero-seq.visible > *:nth-child(1){transition-delay:0s;}       /* eyebrow */
+  .hero-copy.hero-seq.visible > *:nth-child(3){transition-delay:.24s;}     /* lead */
+  .hero-copy.hero-seq.visible > *:nth-child(4){transition-delay:.36s;}     /* acciones */
+  .hero-copy.hero-seq.visible > *:nth-child(5){transition-delay:.48s;}     /* instagram */
+  .hero-copy.hero-seq.visible .mask-reveal > *{transition-delay:.1s;}
 
-  /* Stagger corto (50-80ms) para la sección Definición */
-  .stagger-tight > *{
-    opacity:0;transform:translateY(22px);
-    transition:opacity .55s var(--ease-apple), transform .55s var(--ease-apple);
+  .hero-visual.hero-seq > *{opacity:1;transform:none;}
+  .hero-visual .hero-photo{transition-delay:.18s;}
+  .hero-visual .hero-photo img{transition-delay:.18s;}
+  .hero-floating-badge{opacity:0;transform:translateY(18px);transition:opacity var(--dur-reveal) var(--ease-apple), transform var(--dur-reveal) var(--ease-apple);}
+  .hero-visual.hero-seq.visible .hero-floating-badge{opacity:1;transform:translateY(0);transition-delay:.82s;}
+
+  @media (max-width:980px){
+    .hero-visual.hero-seq.visible .hero-floating-badge{transform:translateY(0);}
   }
-  .stagger-tight.visible > *{opacity:1;transform:translateY(0);}
+
+  /* Movimiento ambiental extremadamente sutil del badge (solo tras terminar su entrada) */
+  @keyframes heroFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-5px);}
+  }
+  .hero-floating-badge.ambient{animation:heroFloat 7.5s var(--ease-apple) infinite;}
+
+  /* Parallax de cursor muy leve sobre el cluster visual del hero (desktop, decorativo) */
+  #heroVisual{transition:transform .5s var(--ease-out-hover);will-change:transform;}
+
+  @media (prefers-reduced-motion: reduce), (hover:none){
+    .hero-floating-badge.ambient{animation:none;}
+  }
+
+  /* ---------- REVEAL (sistema NVY: desplazamiento corto + blur elegante) ---------- */
+  .reveal{
+    opacity:0;
+    transform:translate3d(0,28px,0) scale(.99);
+    filter:blur(8px);
+    transition:opacity .82s var(--ease-apple), transform .82s var(--ease-apple), filter .72s var(--ease-apple);
+    will-change:opacity, transform, filter;
+  }
+  .reveal.visible{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);}
+
+  .stagger > *{
+    opacity:0;
+    transform:translate3d(0,22px,0);
+    filter:blur(6px);
+    transition:opacity .72s var(--ease-apple), transform .72s var(--ease-apple), filter .65s var(--ease-apple);
+    will-change:opacity, transform, filter;
+  }
+  .stagger.visible > *{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
+  .stagger.visible > *:nth-child(1){transition-delay:.04s;}
+  .stagger.visible > *:nth-child(2){transition-delay:.11s;}
+  .stagger.visible > *:nth-child(3){transition-delay:.18s;}
+  .stagger.visible > *:nth-child(4){transition-delay:.25s;}
+  .stagger.visible > *:nth-child(5){transition-delay:.32s;}
+  .stagger.visible > *:nth-child(6){transition-delay:.39s;}
+  @media (max-width:640px){
+    .stagger.visible > *:nth-child(1){transition-delay:0s;}
+    .stagger.visible > *:nth-child(2){transition-delay:.05s;}
+    .stagger.visible > *:nth-child(3){transition-delay:.10s;}
+    .stagger.visible > *:nth-child(4){transition-delay:.15s;}
+    .stagger.visible > *:nth-child(5){transition-delay:.20s;}
+    .stagger.visible > *:nth-child(6){transition-delay:.25s;}
+  }
+
+  /* Stagger corto para la franja del modelo */
+  .stagger-tight > *{
+    opacity:0;
+    transform:translate3d(0,18px,0);
+    filter:blur(4px);
+    transition:opacity .58s var(--ease-apple), transform .58s var(--ease-apple), filter .5s var(--ease-apple);
+  }
+  .stagger-tight.visible > *{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
   .stagger-tight.visible > *:nth-child(1){transition-delay:0s;}
-  .stagger-tight.visible > *:nth-child(2){transition-delay:.07s;}
-  .stagger-tight.visible > *:nth-child(3){transition-delay:.14s;}
-  .stagger-tight.visible > *:nth-child(4){transition-delay:.21s;}
-  .stagger-tight.visible > *:nth-child(5){transition-delay:.28s;}
+  .stagger-tight.visible > *:nth-child(2){transition-delay:.06s;}
+  .stagger-tight.visible > *:nth-child(3){transition-delay:.12s;}
+  .stagger-tight.visible > *:nth-child(4){transition-delay:.18s;}
+  .stagger-tight.visible > *:nth-child(5){transition-delay:.24s;}
+
+  /* Tras terminar el reveal, los delays del stagger no deben retrasar los hovers */
+  .stagger.visible.settled > *, .stagger-tight.visible.settled > *{transition-delay:0s;}
+
+  /* Linea del eyebrow: se dibuja de izquierda a derecha (transform, no width) */
+  .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease-apple) .08s;}
+  .reveal.visible .eyebrow::before,
+  .stagger.visible .eyebrow::before,
+  .hero-seq.visible .eyebrow::before{transform:scaleX(1);}
+
+  /* Mascara vertical para titulos: el contenedor recorta, el texto entra desde abajo */
+  .mask-reveal{overflow:hidden;}
+  .mask-reveal > *{
+    transform:translate3d(0,105%,0);
+    transition:transform .88s var(--ease-apple);
+    will-change:transform;
+  }
+  .reveal.visible .mask-reveal > *,
+  .hero-seq.visible .mask-reveal > *{transform:translate3d(0,0,0);}
+
+  /* Revelado de fotos editoriales: barrido con clip-path + leve escala interna */
+  .photo-mask{clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease-apple);will-change:clip-path;}
+  .reveal.visible .photo-mask,
+  .hero-seq.visible .photo-mask{clip-path:inset(0 0 0 0);}
+  .photo-mask img{transform:scale(1.035);transition:transform 1s var(--ease-apple);will-change:transform;}
+  .reveal.visible .photo-mask img,
+  .hero-seq.visible .photo-mask img{transform:scale(1);}
+
+  @media (prefers-reduced-motion: reduce){
+    .mask-reveal > *{transform:none !important;}
+    .photo-mask{clip-path:none !important;}
+    .photo-mask img{transform:none !important;}
+  }
 
   /* ---------- SOBRE NOSOTROS ---------- */
   .about{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start;}
   .about p + p{margin-top:16px;}
   .about-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-pop);max-width:440px;margin:0 auto;}
   .about-photo img{width:100%;height:auto;display:block;}
+  .photo-parallax{will-change:transform;}
 
   @media (max-width:980px){
     .about{grid-template-columns:1fr;gap:32px;}
@@ -332,24 +438,40 @@
   }
   .model-strip .eyebrow{margin-bottom:24px;}
   .model-row{display:flex;}
-  .model-item{flex:1;padding:0 22px;border-left:1px solid rgba(109,40,217,.14);}
-  .model-item:first-child{padding-left:0;border-left:none;}
+  .model-item{position:relative;flex:1;padding:0 22px;transition:transform var(--dur-micro) var(--ease-out-hover), opacity .58s var(--ease-apple), filter .5s var(--ease-apple);}
+  .model-item:first-child{padding-left:0;}
+  .model-item::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
+    background:rgba(109,40,217,.16);
+    transform:scaleY(0);transform-origin:center;
+    transition:transform .7s var(--ease-apple);
+  }
+  .model-item:first-child::before{display:none;}
+  .stagger-tight.visible .model-item::before{transform:scaleY(1);}
   .model-q{
     display:block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--purple-700);margin-bottom:8px;
+    color:var(--purple-700);margin-bottom:8px;transition:color var(--dur-micro) var(--ease-out-hover);
   }
   .model-a{display:block;font-size:1rem;font-weight:800;line-height:1.35;color:var(--ink);}
   .model-note{margin-top:22px;font-size:.85rem;color:var(--ink-soft);line-height:1.5;}
+  @media (hover:hover){
+    .model-item:hover{transform:translateY(-2px);}
+    .model-item:hover .model-q{color:var(--purple-600);}
+  }
   @media (max-width:900px){
     .model-row{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 24px;}
-    .model-item{border-left:none;padding:0;}
-    .model-item:nth-child(-n+2){border-top:none;}
-    .model-item:nth-child(n+3){border-top:1px solid rgba(109,40,217,.14);padding-top:16px;}
+    .model-item{padding:0;}
+    .model-item::before{left:0;top:0;bottom:auto;right:0;width:auto;height:1px;transform:scaleX(0);}
+    .stagger-tight.visible .model-item::before{transform:scaleX(1);}
+    .model-item:nth-child(-n+2)::before{display:none;}
+    .model-item:nth-child(n+3){padding-top:16px;}
   }
   @media (max-width:560px){
     .model-row{grid-template-columns:1fr;}
-    .model-item{border-top:1px solid rgba(109,40,217,.14);padding-top:16px;}
-    .model-item:first-child{border-top:none;padding-top:0;}
+    .model-item{padding-top:16px;}
+    .model-item:nth-child(n+2)::before{display:block;}
+    .model-item:first-child{padding-top:0;}
+    .model-item:first-child::before{display:none;}
   }
 
   /* ---------- NUESTRO EQUIPO (perros) — hover liquid glass ---------- */
@@ -362,34 +484,38 @@
     border:1px solid rgba(255,255,255,.55);
     border-radius:var(--r-lg);text-align:center;padding-bottom:24px;
     box-shadow:0 18px 45px -25px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
-    transition:transform .3s var(--ease-liquid);
   }
-  /* Halo especular y sombra profunda viven en pseudo-elementos: solo se anima su opacity */
+  /* Transicion unificada: hover instantaneo (.2s) + retorno suave (.42s); el reveal de opacity/blur viaja aparte */
+  .team-card, .human-card, .testimonial-card{
+    transform:translate3d(0,0,0);
+    transition:transform .42s var(--ease-out-hover), opacity .72s var(--ease-apple), filter .65s var(--ease-apple);
+    will-change:transform;
+  }
+  /* Spotlight interior que sigue al cursor (solo se mueve el reflejo, no la card) */
   .team-card::before, .human-card::before, .testimonial-card::before{
     content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-    background:radial-gradient(circle at 22% 16%, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 45%);
-    opacity:0;transition:opacity .3s var(--ease-liquid);
+    background:radial-gradient(320px circle at var(--mx,22%) var(--my,16%), rgba(255,255,255,.62), rgba(255,255,255,0) 58%);
+    opacity:0;transition:opacity .38s var(--ease-out-hover);
   }
   .team-card::after, .human-card::after, .testimonial-card::after{
     content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
     box-shadow:0 30px 60px -20px rgba(109,40,217,.35), inset 0 1px 0 rgba(255,255,255,.9);
-    opacity:0;transition:opacity .3s var(--ease-liquid);
+    opacity:0;transition:opacity .38s var(--ease-out-hover);
   }
-  @media (hover:hover){
+  @media (hover:hover) and (pointer:fine){
     .team-card:hover, .human-card:hover, .testimonial-card:hover{
-      transform:translateY(-8px) scale(1.015);
-      backdrop-filter:blur(22px) saturate(210%);-webkit-backdrop-filter:blur(22px) saturate(210%);
-      transition:transform .4s var(--ease-liquid);
+      transform:translate3d(0,-7px,0) scale(1.01);
+      transition-duration:.2s;transition-delay:0s;
     }
     .team-card:hover::before, .team-card:hover::after,
     .human-card:hover::before, .human-card:hover::after,
     .testimonial-card:hover::before, .testimonial-card:hover::after{
-      opacity:1;transition:opacity .4s var(--ease-liquid);
+      opacity:1;transition-duration:.18s;
     }
-    .team-card:hover .team-photo img{transform:scale(1.07);transition:transform .4s var(--ease-liquid);}
+    .team-card:hover .team-photo img{transform:scale(1.04);transition-duration:.3s;}
   }
   .team-photo{aspect-ratio:1/1;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom:4px solid var(--accent, var(--purple-300));}
-  .team-photo img{width:100%;height:100%;object-fit:cover;transition:transform .3s var(--ease-liquid);}
+  .team-photo img{width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform .65s var(--ease-out-hover);}
   .team-card h4{margin-top:20px;font-size:1.1rem;font-weight:800;color:var(--accent-dark, var(--ink));}
   .team-tag{
     display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;
@@ -410,18 +536,34 @@
     box-shadow:0 20px 50px -30px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6);
   }
   .service-row{
+    position:relative;
     display:flex;align-items:flex-start;gap:26px;padding:34px 38px;
     border-bottom:1px solid rgba(255,255,255,.4);
+    transition:background-color .32s var(--ease-out-hover), transform .38s var(--ease-out-hover), opacity .72s var(--ease-apple), filter .65s var(--ease-apple);
   }
   .service-row:last-child{border-bottom:none;}
+  .service-row::before{
+    content:'';position:absolute;left:0;top:14%;bottom:14%;width:3px;border-radius:2px;
+    background:var(--accent, var(--purple-600));
+    transform:scaleY(0);transform-origin:center;
+    transition:transform .32s var(--ease-out-hover);
+  }
   .service-ic{
     width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
     background:var(--accent, var(--gradient));flex-shrink:0;
     box-shadow:0 12px 26px -8px var(--accent-border, transparent);
+    transition:transform .32s var(--ease-out-hover);
   }
   .service-ic svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+  .service-row-body{transition:transform .32s var(--ease-out-hover);}
   .service-row-body h3{font-size:1.18rem;margin-bottom:8px;letter-spacing:-.01em;color:var(--accent-dark, var(--ink));}
   .service-row-body p{color:var(--ink-soft);font-size:.92rem;line-height:1.6;margin:0;}
+  @media (hover:hover) and (pointer:fine){
+    .service-row:hover{background:var(--accent-tint, transparent);transform:translate3d(0,-2px,0);transition-duration:.16s;transition-delay:0s;}
+    .service-row:hover::before{transform:scaleY(1);transition-duration:.18s;}
+    .service-row:hover .service-ic{transform:translate3d(0,-2px,0) scale(1.035);transition-duration:.16s;}
+    .service-row:hover .service-row-body{transform:translate3d(3px,0,0);transition-duration:.16s;}
+  }
   @media (max-width:640px){.service-row{flex-direction:column;gap:14px;padding:26px 24px;}}
 
   /* ---------- TESTIMONIOS ---------- */
@@ -429,7 +571,6 @@
   .testimonial-card{
     position:relative;
     padding:34px 30px;display:flex;flex-direction:column;gap:20px;
-    transition:transform .3s var(--ease-liquid);
   }
   .testimonial-quote{font-size:1.05rem;line-height:1.6;color:var(--ink);font-style:italic;}
   .testimonial-author strong{display:block;font-size:.95rem;font-weight:700;}
@@ -446,7 +587,6 @@
     border:1px solid rgba(255,255,255,.55);
     border-radius:var(--r-lg);text-align:center;padding-bottom:24px;
     box-shadow:0 18px 45px -25px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
-    transition:transform .3s var(--ease-liquid);
   }
   .human-photo{
     aspect-ratio:4/5;border-radius:var(--r-lg) var(--r-lg) 0 0;overflow:hidden;
@@ -486,22 +626,32 @@
   .credit a{font-weight:700;color:var(--purple-700);transition:opacity .2s var(--ease-out-hover);}
   .credit a:hover{opacity:.7;}
 
+  /* ---------- Lenis smooth scroll ---------- */
+  html.lenis, html.lenis body{height:auto;}
+  .lenis.lenis-smooth{scroll-behavior:auto !important;}
+  .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
+  .lenis.lenis-stopped{overflow:hidden;}
+  .lenis.lenis-smooth iframe{pointer-events:none;}
+
   /* ---------- Mobile: animaciones más cortas, sin efectos pesados ---------- */
   @media (max-width:768px){
     .site-aurora{opacity:.55;}
     .site-aurora .blob{filter:blur(50px);}
     .reveal{transition-duration:.6s;}
-    .stagger > *{transition-duration:.5s;}
-    .stagger-tight > *{transition-duration:.4s;}
+    .stagger > *{transition-duration:.55s;}
+    .stagger-tight > *{transition-duration:.45s;}
   }
 
   /* ---------- Accesibilidad: respeta "reducir movimiento" ---------- */
   @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
     *,*::before,*::after{
       animation-duration:.001ms !important;animation-iteration-count:1 !important;
-      transition-duration:.001ms !important;scroll-behavior:auto !important;
+      transition-duration:.001ms !important;
     }
-    .reveal,.stagger>*,.stagger-tight>*{opacity:1 !important;transform:none !important;}
+    .reveal,.stagger>*,.stagger-tight>*,.hero-seq>*{opacity:1 !important;transform:none !important;filter:none !important;}
+    .mask-reveal > *{transform:none !important;}
+    .photo-mask{clip-path:none !important;}
   }
 </style>
 <noscript><style>.reveal,.stagger>*,.stagger-tight>*{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -563,9 +713,9 @@
 <!-- ===== HERO ===== -->
 <header class="hero">
   <div class="wrap hero-grid">
-    <div class="hero-copy reveal">
+    <div class="hero-copy hero-seq">
       <span class="eyebrow hero-eyebrow">Inka Trewa · Valdivia, Chile</span>
-      <h1>Bienestar, salud y <span class="accent">educación</span> a través del vínculo humano-animal</h1>
+      <div class="mask-reveal"><h1>Bienestar, salud y <span class="accent">educación</span> a través del vínculo humano-animal</h1></div>
       <p class="lead">Acompañamos procesos terapéuticos, educativos y de salud junto a nuestro equipo de perros de intervención entrenados.</p>
       <div class="hero-actions">
         <a href="#contacto" class="btn btn-primary">Contactar</a>
@@ -579,11 +729,11 @@
         @inka_trewa
       </a>
     </div>
-    <div class="hero-visual reveal">
-      <div class="hero-photo">
+    <div class="hero-visual hero-seq" id="heroVisual">
+      <div class="hero-photo photo-mask">
         <img src="assets/inka_trewa/post_10.jpg" alt="Perro de intervención de Inka Trewa">
       </div>
-      <div class="hero-floating-badge glass">
+      <div class="hero-floating-badge glass" id="heroBadge">
         <img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">
         <div>
           <strong>Inka Trewa
@@ -602,12 +752,16 @@
     <div class="about">
       <div class="reveal">
         <span class="eyebrow">Sobre nosotros</span>
-        <h2 class="section-title">Una terapeuta ocupacional al frente de cada sesión</h2>
+        <div class="mask-reveal"><h2 class="section-title">Una terapeuta ocupacional al frente de cada sesión</h2></div>
         <p class="section-sub">Gabriela Álvarez es terapeuta ocupacional, educadora canina y dirige Inka Trewa desde Valdivia. El modelo que aplica nace de la Terapia Ocupacional: cada visita responde a un objetivo de participación definido antes de que el perro entre a la sala.</p>
         <p class="section-sub">Gabriela observa a cada perro durante toda la sesión. Si un perro muestra señales de cansancio o incomodidad, lo retira y le da descanso de inmediato. No es lo mismo llevar un perro cualquiera a una clínica dental que llevar uno entrenado y preparado específicamente para ese contexto.</p>
       </div>
-      <div class="about-photo reveal">
-        <img src="assets/inka_trewa/fotoina.png" alt="Perro de intervención de Inka Trewa" loading="lazy">
+      <div class="photo-parallax" id="aboutPhotoParallax">
+        <div class="about-photo reveal">
+          <div class="photo-mask">
+            <img src="assets/inka_trewa/fotoina.png" alt="Perro de intervención de Inka Trewa" loading="lazy">
+          </div>
+        </div>
       </div>
     </div>
     <div class="model-strip reveal">
@@ -644,7 +798,7 @@
   <div class="wrap">
     <div class="reveal" style="text-align:center;">
       <span class="eyebrow">Servicios</span>
-      <h2 class="section-title">Cómo te acompañamos</h2>
+      <div class="mask-reveal"><h2 class="section-title">Cómo te acompañamos</h2></div>
       <p class="section-sub" style="margin:0 auto;">Cuatro áreas en las que llevamos la intervención asistida con perros a espacios de salud, educación, comunidad e instituciones.</p>
     </div>
     <div class="services-list stagger">
@@ -689,7 +843,7 @@
   <div class="wrap">
     <div class="reveal" style="text-align:center;">
       <span class="eyebrow">Nuestro equipo</span>
-      <h2 class="section-title">El equipo peludo de Inka Trewa</h2>
+      <div class="mask-reveal"><h2 class="section-title">El equipo peludo de Inka Trewa</h2></div>
       <p class="section-sub" style="margin:0 auto;">Cada perro pasa por un proceso de selección y formación basado en el vínculo y el refuerzo positivo antes de participar en una sola sesión. Gabriela evalúa el temperamento, la tolerancia al contacto y la respuesta al estrés de cada uno antes de asignarlo a un contexto de trabajo.</p>
     </div>
     <div class="team-grid stagger">
@@ -723,7 +877,7 @@
   <div class="wrap">
     <div class="reveal" style="text-align:center;">
       <span class="eyebrow">Testimonios</span>
-      <h2 class="section-title">Lo que dicen quienes trabajan con nosotros</h2>
+      <div class="mask-reveal"><h2 class="section-title">Lo que dicen quienes trabajan con nosotros</h2></div>
     </div>
     <div class="testimonial-grid stagger">
       <div class="testimonial-card glass">
@@ -757,7 +911,7 @@
   <div class="wrap">
     <div class="reveal" style="text-align:center;">
       <span class="eyebrow">Equipo humano</span>
-      <h2 class="section-title">Quiénes están detrás de cada sesión</h2>
+      <div class="mask-reveal"><h2 class="section-title">Quiénes están detrás de cada sesión</h2></div>
     </div>
     <div class="human-grid stagger">
       <div class="human-card">
@@ -779,7 +933,7 @@
   <div class="wrap">
     <div class="contact-single glass reveal">
       <span class="eyebrow">Contacto</span>
-      <h3>Hablemos sobre tu institución</h3>
+      <div class="mask-reveal"><h3>Hablemos sobre tu institución</h3></div>
       <p>Escríbenos por WhatsApp, Instagram o correo y conversemos sobre cómo nuestro equipo de perros de intervención puede acompañar tu colegio, clínica u hospital.</p>
       <div class="contact-buttons">
         <!-- mock: actualizar con el numero real de WhatsApp -->
@@ -834,16 +988,159 @@
   burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
-  // Reveal + stagger on scroll
+  // Reveal + stagger on scroll (config NVY: se activa justo al entrar en la zona visible)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      // Tras el reveal, se liberan los delays del stagger para que el hover responda sin retraso
+      setTimeout(() => entry.target.classList.add('settled'), 1200);
+      observer.unobserve(entry.target);
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal, .stagger, .stagger-tight').forEach(el => observer.observe(el));
+
+  // El hero se activa manualmente al cargar, no via observer
+  window.addEventListener('DOMContentLoaded', () => {
+    window.setTimeout(() => {
+      document.querySelectorAll('.hero-seq').forEach(el => el.classList.add('visible'));
+    }, 100);
+  });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Spotlight interior de las cards: solo se mueve el reflejo, no la card
+  if (canHover && !prefersReducedMotion) {
+    document.querySelectorAll('.team-card, .human-card, .testimonial-card').forEach(card => {
+      card.addEventListener('pointermove', (event) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${((event.clientX - r.left) / r.width) * 100}%`);
+        card.style.setProperty('--my', `${((event.clientY - r.top) / r.height) * 100}%`);
+      });
+    });
+  }
+
+  // Lenis: smooth scroll premium (misma configuracion de NVY)
+  (function initializeLenis() {
+    if (prefersReducedMotion || typeof Lenis === 'undefined') return;
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+      lerp: 0.1,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      infinite: false,
+      autoResize: true
+    });
+    function animationFrame(time) {
+      lenis.raf(time);
+      requestAnimationFrame(animationFrame);
+    }
+    requestAnimationFrame(animationFrame);
+
+    const navigationOffset = -88;
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (event) => {
+        const href = anchor.getAttribute('href');
+        if (!href || href === '#' || href.length < 2) return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        event.preventDefault();
+        lenis.scrollTo(target, { offset: navigationOffset, duration: 1.15 });
+      });
+    });
+    window.__lenis = lenis;
+  })();
+
+  // Movimiento ambiental del badge del hero: arranca recien cuando termina su entrada
+  const heroBadge = document.getElementById('heroBadge');
+  if (heroBadge && !prefersReducedMotion) {
+    heroBadge.addEventListener('transitionend', function onBadgeIn(e) {
+      if (e.propertyName !== 'transform') return;
+      heroBadge.classList.add('ambient');
+      heroBadge.removeEventListener('transitionend', onBadgeIn);
+    });
+  }
+
+  // Parallax de cursor extremadamente leve sobre el cluster visual del hero (desktop, decorativo)
+  const heroVisual = document.getElementById('heroVisual');
+  const heroEl = document.querySelector('.hero');
+  if (heroVisual && heroEl && canHover && !prefersReducedMotion) {
+    const maxOffset = 3;
+    let mx = 0, my = 0, raf = null;
+    const apply = () => {
+      raf = null;
+      heroVisual.style.transform = `translate(${mx.toFixed(2)}px, ${my.toFixed(2)}px)`;
+    };
+    const onMove = (e) => {
+      const w = window.innerWidth, h = window.innerHeight;
+      mx = ((e.clientX / w) - 0.5) * 2 * maxOffset;
+      my = ((e.clientY / h) - 0.5) * 2 * maxOffset;
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    const onLeave = () => { heroVisual.style.transform = ''; };
+    new IntersectionObserver((entries) => {
+      const inView = entries[0].isIntersecting;
+      if (inView) {
+        window.addEventListener('mousemove', onMove);
+        heroEl.addEventListener('mouseleave', onLeave);
+      } else {
+        window.removeEventListener('mousemove', onMove);
+        heroEl.removeEventListener('mouseleave', onLeave);
+        heroVisual.style.transform = '';
+      }
+    }, { threshold: 0 }).observe(heroEl);
+  }
+
+  // Parallax vertical muy leve de la foto en "Sobre nosotros" (maximo ~18px de recorrido)
+  const aboutParallax = document.getElementById('aboutPhotoParallax');
+  if (aboutParallax && !prefersReducedMotion) {
+    const maxShift = 9;
+    let ticking = false;
+    const updateParallax = () => {
+      ticking = false;
+      const r = aboutParallax.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = ((r.top + r.height / 2) - vh / 2) / (vh / 2);
+      const clamped = Math.max(-1, Math.min(1, progress));
+      aboutParallax.style.transform = `translateY(${(-clamped * maxShift).toFixed(2)}px)`;
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(updateParallax); } };
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateParallax();
+      } else {
+        window.removeEventListener('scroll', onScroll);
+      }
+    }, { threshold: 0 }).observe(aboutParallax);
+  }
+
+  // Nav: estado activo segun la seccion visible
+  const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+  if (navLinks.length) {
+    const linkBySection = new Map();
+    navLinks.forEach(a => {
+      const sec = document.querySelector(a.getAttribute('href'));
+      if (sec) linkBySection.set(sec, a);
+    });
+    const navScrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const link = linkBySection.get(entry.target);
+        if (!link) return;
+        navLinks.forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    linkBySection.forEach((_, sec) => navScrollObserver.observe(sec));
+  }
+
 </script>
 
 </body>
