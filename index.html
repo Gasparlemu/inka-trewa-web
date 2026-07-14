@@ -8,8 +8,9 @@
 <link rel="icon" href="assets/inka_trewa/profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <style>
   :root{
     --purple-700:#6D28D9;
@@ -110,12 +111,18 @@
   section{position:relative;padding:90px 0;background:rgba(255,255,255,.74);}
   .bg-purple{background:rgba(124,58,237,.07);}
   .bg-green{background:rgba(16,185,129,.07);}
+  /* Las secciones bajo el fold no se pintan hasta acercarse al viewport (ahorro grande en equipos lentos) */
+  #servicios, #perros, #testimonios, #equipo-humano, #contacto{
+    content-visibility:auto;
+    contain-intrinsic-size:auto 760px;
+  }
 
   /* ---------- Aurora de fondo (difuminado morado/verde en toda la web) ---------- */
   .site-aurora{
     position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
   }
-  .site-aurora .blob{position:absolute;border-radius:50%;filter:blur(85px);}
+  /* Los gradientes ya son suaves: blur moderado (45px rinde casi igual visualmente y cuesta mucho menos GPU) */
+  .site-aurora .blob{position:absolute;border-radius:50%;filter:blur(45px);will-change:transform;}
   .site-aurora .b1{
     top:-120px;left:-140px;width:560px;height:560px;
     background:radial-gradient(circle, rgba(196,181,253,.5) 0%, rgba(167,139,250,.16) 45%, transparent 70%);
@@ -162,8 +169,8 @@
   /* ---------- Glass ---------- */
   .glass{
     background:rgba(255,255,255,.65);
-    backdrop-filter:blur(24px) saturate(160%);
-    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
     border:1px solid rgba(255,255,255,.6);
     box-shadow:var(--shadow-soft);
     border-radius:var(--r-lg);
@@ -221,8 +228,8 @@
     padding:11px 20px;
     border-radius:999px;
     background:rgba(255,255,255,.62);
-    backdrop-filter:blur(22px) saturate(180%);
-    -webkit-backdrop-filter:blur(22px) saturate(180%);
+    backdrop-filter:blur(14px) saturate(180%);
+    -webkit-backdrop-filter:blur(14px) saturate(180%);
     border:1px solid rgba(255,255,255,.55);
     box-shadow:0 14px 40px -22px rgba(109,40,217,.35);
     transition:transform .3s var(--ease-out-hover);
@@ -345,7 +352,6 @@
     transform:translate3d(0,28px,0) scale(.99);
     filter:blur(8px);
     transition:opacity .82s var(--ease-apple), transform .82s var(--ease-apple), filter .72s var(--ease-apple);
-    will-change:opacity, transform, filter;
   }
   .reveal.visible{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);}
 
@@ -354,7 +360,6 @@
     transform:translate3d(0,22px,0);
     filter:blur(6px);
     transition:opacity .72s var(--ease-apple), transform .72s var(--ease-apple), filter .65s var(--ease-apple);
-    will-change:opacity, transform, filter;
   }
   .stagger.visible > *{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
   .stagger.visible > *:nth-child(1){transition-delay:.04s;}
@@ -479,8 +484,8 @@
   .team-card{
     position:relative;
     background:linear-gradient(165deg, var(--accent-tint,rgba(255,255,255,.5)) 0%, rgba(255,255,255,.35) 60%);
-    backdrop-filter:blur(22px) saturate(180%);
-    -webkit-backdrop-filter:blur(22px) saturate(180%);
+    backdrop-filter:blur(14px) saturate(180%);
+    -webkit-backdrop-filter:blur(14px) saturate(180%);
     border:1px solid rgba(255,255,255,.55);
     border-radius:var(--r-lg);text-align:center;padding-bottom:24px;
     box-shadow:0 18px 45px -25px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
@@ -514,7 +519,13 @@
     }
     .team-card:hover .team-photo img{transform:scale(1.04);transition-duration:.3s;}
   }
-  .team-photo{aspect-ratio:1/1;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom:4px solid var(--accent, var(--purple-300));}
+  .team-photo{
+    aspect-ratio:1/1;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0;
+    border-bottom:4px solid var(--accent, var(--purple-300));
+    transition:transform .5s var(--ease-apple);
+  }
+  /* Al abrir el libro, la foto principal se achica para que las otras dos se vean mejor */
+  .team-card.fan-open .team-photo{transform:scale(.84);transform-origin:50% 92%;}
   .team-photo img{width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform .65s var(--ease-out-hover);}
 
   /* ---------- Efecto libro: dos fotos se despliegan desde detras de la card ---------- */
@@ -558,8 +569,8 @@
     display:flex;flex-direction:column;margin-top:50px;
     border-radius:var(--r-lg);overflow:hidden;
     background:rgba(255,255,255,.45);
-    backdrop-filter:blur(24px) saturate(180%);
-    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    backdrop-filter:blur(16px) saturate(180%);
+    -webkit-backdrop-filter:blur(16px) saturate(180%);
     border:1px solid rgba(255,255,255,.55);
     box-shadow:0 20px 50px -30px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6);
   }
@@ -610,8 +621,8 @@
   .human-card{
     position:relative;
     background:linear-gradient(165deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.35) 60%);
-    backdrop-filter:blur(22px) saturate(180%);
-    -webkit-backdrop-filter:blur(22px) saturate(180%);
+    backdrop-filter:blur(14px) saturate(180%);
+    -webkit-backdrop-filter:blur(14px) saturate(180%);
     border:1px solid rgba(255,255,255,.55);
     border-radius:var(--r-lg);text-align:center;padding-bottom:24px;
     box-shadow:0 18px 45px -25px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
@@ -759,7 +770,7 @@
     </div>
     <div class="hero-visual hero-seq" id="heroVisual">
       <div class="hero-photo photo-mask">
-        <img src="assets/inka_trewa/post_10.jpg" alt="Perro de intervención de Inka Trewa">
+        <img src="assets/inka_trewa/post_10.jpg" alt="Perro de intervención de Inka Trewa" fetchpriority="high" decoding="async">
       </div>
       <div class="hero-floating-badge glass" id="heroBadge">
         <img src="assets/inka_trewa/profile.jpg" alt="Inka Trewa">
@@ -787,7 +798,7 @@
       <div class="photo-parallax" id="aboutPhotoParallax">
         <div class="about-photo reveal">
           <div class="photo-mask">
-            <img src="assets/inka_trewa/fotoina.png" alt="Perro de intervención de Inka Trewa" loading="lazy">
+            <img src="assets/inka_trewa/fotoina_w.jpg" alt="Perro de intervención de Inka Trewa" loading="lazy">
           </div>
         </div>
       </div>
@@ -894,7 +905,7 @@
       <div class="team-card accent-teal has-fan" tabindex="0" aria-label="Ver más fotos de Ina">
         <div class="fan-photo fan-left" aria-hidden="true"><img src="assets/inka_trewa/ina_b.jpg" alt="" loading="lazy"></div>
         <div class="fan-photo fan-right" aria-hidden="true"><img src="assets/inka_trewa/ina_c.jpg" alt="" loading="lazy"></div>
-        <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de intervención" loading="lazy"></div>
+        <div class="team-photo"><img src="assets/inka_trewa/fotoina_w.jpg" alt="Ina, perro de intervención" loading="lazy"></div>
         <h4>Ina</h4>
         <span class="team-tag">Perro de intervención</span>
         <span class="fan-hint">Toca para ver más fotos</span>
@@ -1026,16 +1037,33 @@
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
   // Reveal + stagger on scroll (config NVY: se activa justo al entrar en la zona visible)
+  const pendingReveals = new Set(document.querySelectorAll('.reveal, .stagger, .stagger-tight'));
+  const revealNow = (el) => {
+    if (!pendingReveals.has(el)) return;
+    pendingReveals.delete(el);
+    el.classList.add('visible');
+    // Tras el reveal, se liberan los delays del stagger para que el hover responda sin retraso
+    setTimeout(() => el.classList.add('settled'), 1200);
+    observer.unobserve(el);
+    if (!pendingReveals.size) window.removeEventListener('scroll', onRevealScroll);
+  };
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
-      // Tras el reveal, se liberan los delays del stagger para que el hover responda sin retraso
-      setTimeout(() => entry.target.classList.add('settled'), 1200);
-      observer.unobserve(entry.target);
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) revealNow(entry.target); });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal, .stagger, .stagger-tight').forEach(el => observer.observe(el));
+  pendingReveals.forEach(el => observer.observe(el));
+
+  // Red de seguridad: con scroll muy rapido (o secciones con content-visibility) ningun
+  // elemento ya superado puede quedar sin revelar
+  let revealSweepRaf = null;
+  const revealSweep = () => {
+    revealSweepRaf = null;
+    const limit = window.innerHeight * 0.96;
+    pendingReveals.forEach(el => {
+      if (el.getBoundingClientRect().top < limit) revealNow(el);
+    });
+  };
+  const onRevealScroll = () => { if (!revealSweepRaf) revealSweepRaf = requestAnimationFrame(revealSweep); };
+  window.addEventListener('scroll', onRevealScroll, { passive: true });
 
   // El hero se activa manualmente al cargar, no via observer
   window.addEventListener('DOMContentLoaded', () => {
@@ -1088,8 +1116,9 @@
     });
   }
 
-  // Lenis: smooth scroll premium (misma configuracion de NVY)
-  (function initializeLenis() {
+  // Lenis: smooth scroll premium (misma configuracion de NVY).
+  // El script va con defer para no bloquear el primer render: se inicializa en DOMContentLoaded.
+  window.addEventListener('DOMContentLoaded', function initializeLenis() {
     if (prefersReducedMotion || typeof Lenis === 'undefined') return;
     const lenis = new Lenis({
       duration: 1.15,
@@ -1122,7 +1151,7 @@
       });
     });
     window.__lenis = lenis;
-  })();
+  });
 
   // Movimiento ambiental del badge del hero: arranca recien cuando termina su entrada
   const heroBadge = document.getElementById('heroBadge');
