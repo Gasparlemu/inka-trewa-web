@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inka Trewa Valdivia · Intervención Asistida con Perros</title>
 <meta name="description" content="Inka Trewa es un modelo de intervención asistida con perros liderado por una terapeuta ocupacional en Valdivia. Perros entrenados que acompañan procesos de salud, educación y comunidad.">
-<link rel="icon" href="assets/inka_trewa/post_01.jpg">
+<link rel="icon" href="assets/inka_trewa/profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -516,6 +516,34 @@
   }
   .team-photo{aspect-ratio:1/1;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom:4px solid var(--accent, var(--purple-300));}
   .team-photo img{width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform .65s var(--ease-out-hover);}
+
+  /* ---------- Efecto libro: dos fotos se despliegan desde detras de la card ---------- */
+  .has-fan{cursor:pointer;}
+  .fan-photo{
+    position:absolute;top:4%;width:56%;aspect-ratio:3/4;
+    border-radius:var(--r-md);overflow:hidden;
+    border:5px solid #fff;
+    box-shadow:0 22px 50px -18px rgba(29,29,31,.4);
+    opacity:0;z-index:-1;pointer-events:none;
+    transition:transform .55s var(--ease-apple), opacity .3s var(--ease-apple);
+    will-change:transform;
+  }
+  .fan-photo img{width:100%;height:100%;object-fit:cover;}
+  .fan-left{left:6%;transform:translate3d(0,10%,0) rotate(0deg) scale(.88);transform-origin:bottom center;}
+  .fan-right{right:6%;transform:translate3d(0,10%,0) rotate(0deg) scale(.88);transform-origin:bottom center;transition-delay:.05s;}
+  .team-card.fan-open{z-index:40;}
+  .team-card.fan-open .fan-left{opacity:1;transform:translate3d(-28%,-74%,0) rotate(-8deg) scale(1);}
+  .team-card.fan-open .fan-right{opacity:1;transform:translate3d(28%,-74%,0) rotate(8deg) scale(1);}
+  .fan-hint{display:none;font-size:.72rem;font-weight:500;color:var(--ink-soft);margin-top:10px;}
+  @media (hover:none){
+    .has-fan .fan-hint{display:block;}
+    .team-card.fan-open .fan-hint{visibility:hidden;}
+  }
+  /* En movil (1 columna) el despliegue es mas contenido para no salirse del viewport */
+  @media (max-width:560px){
+    .team-card.fan-open .fan-left{transform:translate3d(-13%,-76%,0) rotate(-7deg) scale(1);}
+    .team-card.fan-open .fan-right{transform:translate3d(13%,-76%,0) rotate(7deg) scale(1);}
+  }
   .team-card h4{margin-top:20px;font-size:1.1rem;font-weight:800;color:var(--accent-dark, var(--ink));}
   .team-tag{
     display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;
@@ -685,7 +713,7 @@
 <nav id="nav">
   <div class="wrap">
     <div class="nav-pill">
-      <a href="#" class="brand"><img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa"><span class="brand-name">Inka Trewa</span></a>
+      <a href="#" class="brand"><img src="assets/inka_trewa/profile.jpg" alt="Inka Trewa"><span class="brand-name">Inka Trewa</span></a>
       <div class="nav-links">
         <a href="#sobre-nosotros">Sobre Nosotros</a>
         <a href="#servicios">Servicios</a>
@@ -734,7 +762,7 @@
         <img src="assets/inka_trewa/post_10.jpg" alt="Perro de intervención de Inka Trewa">
       </div>
       <div class="hero-floating-badge glass" id="heroBadge">
-        <img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">
+        <img src="assets/inka_trewa/profile.jpg" alt="Inka Trewa">
         <div>
           <strong>Inka Trewa
             <svg class="verified" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#3897F0"/><path d="M7 12.5l3 3 7-7.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
@@ -847,20 +875,29 @@
       <p class="section-sub" style="margin:0 auto;">Cada perro pasa por un proceso de selección y formación basado en el vínculo y el refuerzo positivo antes de participar en una sola sesión. Gabriela evalúa el temperamento, la tolerancia al contacto y la respuesta al estrés de cada uno antes de asignarlo a un contexto de trabajo.</p>
     </div>
     <div class="team-grid stagger">
-      <div class="team-card accent-indigo">
+      <div class="team-card accent-indigo has-fan" tabindex="0" aria-label="Ver más fotos de Roma">
+        <div class="fan-photo fan-left" aria-hidden="true"><img src="assets/inka_trewa/roma_b.jpg" alt="" loading="lazy"></div>
+        <div class="fan-photo fan-right" aria-hidden="true"><img src="assets/inka_trewa/roma_c.jpg" alt="" loading="lazy"></div>
         <div class="team-photo"><img src="assets/inka_trewa/post_10.jpg" alt="Roma, perro de intervención" loading="lazy"></div>
         <h4>Roma</h4>
         <span class="team-tag">Perro de intervención</span>
+        <span class="fan-hint">Toca para ver más fotos</span>
       </div>
-      <div class="team-card accent-sky">
-        <div class="team-photo"><img src="assets/inka_trewa/post_06.jpg" alt="Joy, perro de intervención" loading="lazy"></div>
+      <div class="team-card accent-sky has-fan" tabindex="0" aria-label="Ver más fotos de Joy">
+        <div class="fan-photo fan-left" aria-hidden="true"><img src="assets/inka_trewa/joy_b.jpg" alt="" loading="lazy"></div>
+        <div class="fan-photo fan-right" aria-hidden="true"><img src="assets/inka_trewa/joy_c.jpg" alt="" loading="lazy"></div>
+        <div class="team-photo"><img src="assets/inka_trewa/joy.jpg" alt="Joy, perro de intervención" loading="lazy"></div>
         <h4>Joy</h4>
         <span class="team-tag">Perro de intervención</span>
+        <span class="fan-hint">Toca para ver más fotos</span>
       </div>
-      <div class="team-card accent-teal">
+      <div class="team-card accent-teal has-fan" tabindex="0" aria-label="Ver más fotos de Ina">
+        <div class="fan-photo fan-left" aria-hidden="true"><img src="assets/inka_trewa/ina_b.jpg" alt="" loading="lazy"></div>
+        <div class="fan-photo fan-right" aria-hidden="true"><img src="assets/inka_trewa/ina_c.jpg" alt="" loading="lazy"></div>
         <div class="team-photo"><img src="assets/inka_trewa/fotoina.png" alt="Ina, perro de intervención" loading="lazy"></div>
         <h4>Ina</h4>
         <span class="team-tag">Perro de intervención</span>
+        <span class="fan-hint">Toca para ver más fotos</span>
       </div>
       <div class="team-card accent-purple">
         <div class="team-photo"><img src="assets/inka_trewa/maximo.jpg" alt="Máximo, perro de intervención" loading="lazy"></div>
@@ -953,7 +990,7 @@
 
 <footer>
   <div class="wrap">
-    <a href="#" class="brand"><img src="assets/inka_trewa/post_01.jpg" alt="Inka Trewa">Inka Trewa</a>
+    <a href="#" class="brand"><img src="assets/inka_trewa/profile.jpg" alt="Inka Trewa">Inka Trewa</a>
     <div class="foot-socials">
       <a href="https://www.instagram.com/inka_trewa/" target="_blank" aria-label="Instagram">
         <span class="ig-icon-wrap" style="width:20px;height:20px;" aria-hidden="true">
@@ -1009,6 +1046,36 @@
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Efecto libro: en desktop se abre con el cursor, en touch con un toque
+  const fanCards = [...document.querySelectorAll('.has-fan')];
+  if (fanCards.length) {
+    const closeAll = (except) => fanCards.forEach(c => { if (c !== except) c.classList.remove('fan-open'); });
+    fanCards.forEach(card => {
+      if (canHover) {
+        card.addEventListener('mouseenter', () => card.classList.add('fan-open'));
+        card.addEventListener('mouseleave', () => card.classList.remove('fan-open'));
+      } else {
+        card.addEventListener('click', () => {
+          const open = card.classList.contains('fan-open');
+          closeAll(card);
+          card.classList.toggle('fan-open', !open);
+        });
+      }
+      card.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        const open = card.classList.contains('fan-open');
+        closeAll(card);
+        card.classList.toggle('fan-open', !open);
+      });
+    });
+    if (!canHover) {
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.has-fan')) closeAll(null);
+      });
+    }
+  }
 
   // Spotlight interior de las cards: solo se mueve el reflejo, no la card
   if (canHover && !prefersReducedMotion) {
