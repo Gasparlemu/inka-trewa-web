@@ -108,7 +108,15 @@
   }
   .section-sub{color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.15rem);max-width:620px;line-height:1.6;font-weight:400;}
 
-  section{position:relative;padding:90px 0;background:rgba(255,255,255,.74);}
+  /* Fondo por defecto: base clara + tenue tinte de marca (morado arriba-izq, verde abajo-der)
+     para que las secciones no se vean como blanco plano. Se ve en desktop y movil por igual. */
+  section{
+    position:relative;padding:90px 0;
+    background:
+      radial-gradient(85% 60% at 6% -4%, rgba(124,58,237,.09), transparent 60%),
+      radial-gradient(85% 62% at 96% 104%, rgba(16,185,129,.10), transparent 60%),
+      rgba(255,255,255,.66);
+  }
   .bg-purple{background:rgba(124,58,237,.07);}
   .bg-green{background:rgba(16,185,129,.07);}
   /* Las secciones bajo el fold no se pintan hasta acercarse al viewport (ahorro grande en equipos lentos) */
@@ -640,13 +648,29 @@
 
   /* ---------- CONTACTO ---------- */
   .contact-single{
+    position:relative;overflow:hidden;
     max-width:620px;margin:0 auto;
-    padding:56px 50px;text-align:center;
+    padding:58px 50px;text-align:center;
+    /* Card con color de marca: degradado morado -> blanco -> verde, borde y sombra con mas contraste */
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(124,58,237,.14), transparent 55%),
+      radial-gradient(120% 90% at 100% 100%, rgba(16,185,129,.16), transparent 55%),
+      linear-gradient(160deg, rgba(255,255,255,.94), rgba(255,255,255,.88));
+    border:1.5px solid rgba(124,58,237,.22);
+    box-shadow:
+      0 34px 80px -34px rgba(109,40,217,.42),
+      0 6px 22px -12px rgba(16,185,129,.22),
+      inset 0 1px 0 rgba(255,255,255,.95);
+  }
+  /* Franja de acento superior con el degradado de marca */
+  .contact-single::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg, var(--purple-600), var(--green-500));
   }
   .contact-single h3{font-size:1.7rem;margin-bottom:14px;}
-  .contact-single p{color:var(--ink-soft);line-height:1.6;margin-bottom:34px;font-size:1.05rem;}
+  .contact-single p{color:var(--ink);opacity:.72;line-height:1.6;margin-bottom:34px;font-size:1.05rem;}
   .contact-buttons{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
-  @media (max-width:560px){.contact-single{padding:40px 28px;}}
+  @media (max-width:560px){.contact-single{padding:44px 26px;}}
 
   footer{
     padding:54px 0 36px;text-align:center;background:rgba(255,255,255,.55);
