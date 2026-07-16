@@ -505,23 +505,22 @@
     will-change:transform;
   }
   /* Spotlight interior que sigue al cursor (solo se mueve el reflejo, no la card) */
-  .team-card::before, .human-card::before, .testimonial-card::before{
+  .team-card::before, .testimonial-card::before{
     content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
     background:radial-gradient(320px circle at var(--mx,22%) var(--my,16%), rgba(255,255,255,.62), rgba(255,255,255,0) 58%);
     opacity:0;transition:opacity .38s var(--ease-out-hover);
   }
-  .team-card::after, .human-card::after, .testimonial-card::after{
+  .team-card::after, .testimonial-card::after{
     content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
     box-shadow:0 30px 60px -20px rgba(109,40,217,.35), inset 0 1px 0 rgba(255,255,255,.9);
     opacity:0;transition:opacity .38s var(--ease-out-hover);
   }
   @media (hover:hover) and (pointer:fine){
-    .team-card:hover, .human-card:hover, .testimonial-card:hover{
+    .team-card:hover, .testimonial-card:hover{
       transform:translate3d(0,-7px,0) scale(1.01);
       transition-duration:.2s;transition-delay:0s;
     }
     .team-card:hover::before, .team-card:hover::after,
-    .human-card:hover::before, .human-card:hover::after,
     .testimonial-card:hover::before, .testimonial-card:hover::after{
       opacity:1;transition-duration:.18s;
     }
@@ -987,7 +986,7 @@
     </div>
     <div class="human-grid stagger">
       <div class="human-card">
-        <div class="human-photo ph-gradient-a"><span>G</span></div>
+        <div class="human-photo"><img src="assets/inka_trewa/01 ENTRENADORA-10.jpg" alt="Gabriela Álvarez, terapeuta ocupacional y directora de Inka Trewa" loading="lazy" style="width:100%;height:100%;object-fit:cover;"></div>
         <h4>Gabriela Álvarez</h4>
         <span class="team-tag">Terapeuta Ocupacional y Directora</span>
       </div>
@@ -1131,7 +1130,7 @@
 
   // Spotlight interior de las cards: solo se mueve el reflejo, no la card
   if (canHover && !prefersReducedMotion) {
-    document.querySelectorAll('.team-card, .human-card, .testimonial-card').forEach(card => {
+    document.querySelectorAll('.team-card, .testimonial-card').forEach(card => {
       card.addEventListener('pointermove', (event) => {
         const r = card.getBoundingClientRect();
         card.style.setProperty('--mx', `${((event.clientX - r.left) / r.width) * 100}%`);
